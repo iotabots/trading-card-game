@@ -5,7 +5,7 @@ import Player from '../components/Player'
 
 import { OPPONENT, PLAYER } from '../data/players'
 import Round from '../components/Round'
-import { CardType } from '../types'
+import { BotType, CardType } from '../types'
 import { PHASES } from '../data/phases'
 
 const Game: React.FC = () => {
@@ -17,7 +17,7 @@ const Game: React.FC = () => {
   const [round, setRound] = React.useState(1)
   const [currentPlayer, setCurrentPlayer] = React.useState<string>('player')
 
-  const onFight = (card: CardType): void => {
+  const onFight = (card: BotType): void => {
     console.log('Card Attack', card.attack)
     if (currentPlayer === 'player') {
       setPlayers({
@@ -42,7 +42,7 @@ const Game: React.FC = () => {
         setCurrentPlayer={setCurrentPlayer}
         round={round}
         setRound={setRound}
-        onFight={onFight}
+      // onFight={onFight}
       />
       <Round
         setRound={setRound}
@@ -62,7 +62,7 @@ const Game: React.FC = () => {
         setCurrentPlayer={setCurrentPlayer}
         round={round}
         setRound={setRound}
-        onFight={onFight}
+      // onFight={onFight}
       />
     </Box>
   )

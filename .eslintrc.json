@@ -5,7 +5,6 @@
   },
   "extends": [
     "plugin:react/recommended",
-    "plugin:@next/next/recommended",
     "airbnb",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",

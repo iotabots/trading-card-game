@@ -18,7 +18,8 @@ interface PlayerProps extends BoxProps {
   setCurrentPlayer: (player: string) => void
   round: number
   setRound: (number: number) => void
-  onFight: (card: CardType) => void
+  // eslint-disable-next-line react/require-default-props
+  onFight?: (card: CardType) => void
 }
 
 const Player: React.FC<PlayerProps> = (props) => {
@@ -88,13 +89,15 @@ const Player: React.FC<PlayerProps> = (props) => {
   const onPlay = (number: number): void => {
     const nextHand = hand.filter((element, index) => index !== number)
     setBoard([...board, hand[number]])
-    setMp(mp - hand[number].cost)
+    // setMp(mp - hand[number].cost)
+    console.log('onPlay')
     setHand(nextHand)
   }
 
   const onAttack = (number: number): void => {
-    onFight(board[number])
-    console.log('attack', board[number].attack)
+    // onFight(board[number])
+    // console.log('attack', board[number].attack)
+    console.log('onAttack')
   }
 
   return (

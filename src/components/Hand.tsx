@@ -23,7 +23,7 @@ const Hand: React.FC<HandProps> = (props) => {
         <Box
           component='button'
           onClick={
-            mp >= card.cost
+            mp >= card.mana
               ? () => onPlay(index)
               : () => console.log('error')
           }
