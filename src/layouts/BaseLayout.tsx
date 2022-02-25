@@ -15,7 +15,16 @@ const BaseLayout: React.FC = ({ children }) => {
     }
   ]
   return (
-    <Box p={6} pt={11}>
+    <Box
+      pt={10}
+      sx={{
+        '& .MuiAppBar-root': {
+          top: 20,
+          left: 20,
+          width: 'calc(100% - 40px)'
+        }
+      }}
+    >
       <Navigation
         identity
         menu={MENU}

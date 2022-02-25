@@ -11,7 +11,7 @@ const BackCard: React.FC<BoxProps> = (props) => (
       height: 200,
       width: 142,
       bottom: 'auto',
-      backgroundImage: 'url(https://lh3.googleusercontent.com/fife/AAWUweX36sqR_B4OlxZ4_Hku4jzfUMAwhjMo8R1PudD4amsqUdRAkwhE0k1L49Gnj0Q_vF2j-yuhr8G7x8czlbiH8qPS26t0qmuavX1uZSvud6MJdX59dSXEUpRteSAIqsS7qZ17wWa3-L2-7RP8pnD4-czsjAnRa6sFRrxTnyTqub8ojyVOjUPMLsSy1U4Jm0olX3EISWidvlz1x1N5aXXJGfxOfgCenxghljsfh5qzGtD3Pt_7Wt6JwYzkSv_tnUvsXfPtd19T8rcJXjLy5WDl8yZZOb4omshMJ0XYUNS6cCTIW7Wu9rljE8IJUfjZtS6z9TDVi7M3ygycxgJjqFWw3KkV6BIp16a3DfriO6Mso9tV7iZg7i9OxqJoyngmrXiBp-xbwyOwK4TC4-mqKvMNpAoN2of-jbRSscy8vbaETo831Qm4Bc4oYrSyfEf6zj_mELXJgLqgtX4RQZkY6VzuoKxcneleBvh0JES1vDdfcGUhrdFbEyVeAVmbkLNjbf-jIQOxmwWqBq7DB99nikR63ok48tiF6kHKr_Coo8Y4PZRWXaJo-U7-zeMcUsfVFtf14LEVdYoj1-3Op81WQBCA7gC7qRG__8bKX8P3sCS1KoZwrb5C9bGdBA3XvlQnmDa-kRRotmixjcTPM0Wn4OcodF8jnuPGlXqZ02kqrYRIT2B4mTPdrgyF0CY-4SxOwEGnGd-uYeAIPrgsGhbqmw0pgBa0KdQmUp_sXnY=w2560-h1304-ft)',
+      backgroundImage: 'url(https://cdn.discordapp.com/attachments/420674357652750367/946485073081946132/Back_copy.png)',
       backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
       transform: 'rotateX(51deg) rotateZ(-32deg)',

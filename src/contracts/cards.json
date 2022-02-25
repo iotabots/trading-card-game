@@ -738,6 +738,53 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getMyCollection",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "id",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint8",
+                "name": "mana",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint8",
+                "name": "ap",
+                "type": "uint8"
+              },
+              {
+                "internalType": "uint8",
+                "name": "def",
+                "type": "uint8"
+              }
+            ],
+            "internalType": "struct Cards.Card",
+            "name": "card",
+            "type": "tuple"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Cards.CollectionItem[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",

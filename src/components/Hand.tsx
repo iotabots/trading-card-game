@@ -21,7 +21,6 @@ const Hand: React.FC<HandProps> = (props) => {
     >
       {hand.length > 0 && hand.flatMap((card, index) => (
         <Box
-          component='button'
           onClick={
             mp >= card.mana
               ? () => onPlay(index)

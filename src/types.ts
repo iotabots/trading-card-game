@@ -82,3 +82,12 @@ export interface PlayType extends ActionType {
 export interface EffectType {
   id: string
 }
+
+export interface DeckType {
+  id: number
+  name: string
+  cardsNext: {
+    id: number
+    count: number
+  }[]
+}
