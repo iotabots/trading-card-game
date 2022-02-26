@@ -2,28 +2,23 @@ import React, { Dispatch, SetStateAction } from 'react'
 import { Box, Typography } from '@iotabots/components'
 import EditRoundedIcon from '@mui/icons-material/EditRounded'
 import { IconButton } from '@mui/material'
-import { flexRowBetween, transition } from '../styles'
+import { flexRowBetween, transition } from '../../styles'
+import { DeckType } from '../../types'
 
-interface DeckBoxProps {
-  id: number
-  name: string
-  cardsNext: {
-    id: number
-    count: number
-  }[]
+interface DeckBoxProps extends DeckType {
   setSelectedDeck: Dispatch<SetStateAction<number | undefined>>
 }
 
 const DeckBox: React.FC<DeckBoxProps> = (props) => {
-  const { name, id, setSelectedDeck, cardsNext } = props
+  const { name, id, setSelectedDeck, cards } = props
   const onClick = (): void => {
     setSelectedDeck(id)
     console.log(id)
   }
 
   let count = 0
-  for (let index = 0; index < cardsNext.length; index += 1) {
-    const element = cardsNext[index]
+  for (let index = 0; index < cards.length; index += 1) {
+    const element = cards[index]
     count += element.count
   }
 

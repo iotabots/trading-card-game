@@ -1,58 +1,73 @@
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import React from 'react'
 import { Box, Container, Grid, Typography } from '@iotabots/components'
 import { useWeb3React } from '@web3-react/core'
 import Web3 from 'web3'
-import AddRoundedIcon from '@mui/icons-material/AddRounded'
-import { IconButton } from '@mui/material'
+import { Contract } from 'web3-eth-contract'
+import { AbiItem } from 'web3-utils'
 import BaseLayout from '../layouts/BaseLayout'
-import DeckBox from '../components/DeckBox'
-import BuyPacks from '../components/BuyPacks'
-import CollectionItem from '../components/CollectionItem'
-import { DECKS } from '../data/decks'
+import BuyPacks from '../components/Collection/BuyPacks'
+import CollectionItem from '../components/Collection/CollectionItem'
+import { DECK } from '../data/decks'
 import { DeckType } from '../types'
-import EditDeck from '../components/EditDeck'
+import EditDeck from '../components/Deck/EditDeck'
+import Decks from '../components/Deck/Decks'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const CARDS_ABI = require('../contracts/cards.json')
 
-const CARDS_ADDRESS = '0x29e755AD70B44d4e729483BDd35115E6f76E221F'
+const CARDS_ADDRESS = '0x16Cb79ABC1907321Be809F2d3D14b9022B522D4F'
+
+const GAME_ABI = require('../contracts/game.json')
+
+const GAME_ADDRESS = '0x03aA69E81e2421c5821d3e54Ad89832470AC84f8'
 
 const Collection: React.FC = () => {
   const { account, library } = useWeb3React()
-  const [decks, setDecks] = React.useState<DeckType[]>(DECKS)
-  const [selectedDeck, setSelectedDeck] = React.useState<number | undefined>(undefined)
-  const [contract, setContract] = React.useState(undefined)
+
+  // C O N T R A C T S
+  const [cardsContract, setCardsContract] =
+    React.useState<Contract | undefined>(undefined)
+  const [gameContract, setGameContract] =
+    React.useState<Contract | undefined>(undefined)
+
+  const [deck, setDeck] = React.useState<DeckType>(DECK)
+  const [selectedDeck, setSelectedDeck] =
+    React.useState<number | undefined>(undefined)
   const [collection, setCollection] = React.useState<undefined[]>([])
 
   const init = async (_account: any, _library: any): Promise<void> => {
-    console.log('init')
     const web3 = new Web3(_library.provider)
-    // @ts-ignore
-    const test = new web3.eth.Contract(CARDS_ABI, CARDS_ADDRESS)
-    // @ts-ignore
-    setContract(test)
+    const CardsContract =
+      new web3.eth.Contract(CARDS_ABI as AbiItem[], CARDS_ADDRESS)
+    setCardsContract(CardsContract)
 
-    const data = await test.methods.getMyCollection().call({ from: account })
+    const data =
+      await CardsContract.methods.getMyCollection().call({ from: account })
     setCollection(data)
-    console.log('my collection', data)
+
+    const GameContract =
+      new web3.eth.Contract(GAME_ABI as AbiItem[], GAME_ADDRESS)
+    setGameContract(GameContract)
   }
 
   React.useEffect(() => {
     if (!!account && !!library) {
       init(account, library)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, library])
 
-  const onClickItem = (id: number): void => {
-    setDecks(
-      {
-        ...decks,
+  const onPlay = async (): Promise<void> => {
+    const array: string[] = []
+
+    deck.cards.map((item): void => {
+      for (let index = 0; index < item.count; index += 1) {
+        array.push(item.id)
       }
-    )
+    })
+    if (gameContract) {
+      await gameContract.methods.play(array).send({ from: account })
+    }
   }
 
   return (
@@ -65,7 +80,7 @@ const Collection: React.FC = () => {
           justifyContent: 'space-between',
         }}>
           <Typography variant='h2'>Collection</Typography>
-          <BuyPacks available={!!contract} contract={contract} />
+          {cardsContract && <BuyPacks contract={cardsContract} />}
         </Box>
         <Grid container spacing={6}>
           <Grid item xs={8} container spacing={6}>
@@ -78,33 +93,17 @@ const Collection: React.FC = () => {
           </Grid>
           <Grid item xs={4}>
             {selectedDeck !== undefined ? (
-              <EditDeck deck={decks[selectedDeck]} setSelectedDeck={setSelectedDeck} />
+              <EditDeck
+                deck={deck}
+                setDeck={setDeck}
+                setSelectedDeck={setSelectedDeck}
+              />
             ) : (
-              <Box sx={{
-                bgcolor: 'rgba(0,0,0,0.5)',
-                borderRadius: '8px',
-                p: 4
-              }}>
-                <Box sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  mb: 4
-                }}>
-                  <Typography variant='h4'>Decks</Typography>
-                  <IconButton
-                    color='success'
-                    onClick={() => console.log('Create Deck')}
-                    sx={{
-                      ml: 4
-                    }}>
-                    <AddRoundedIcon />
-                  </IconButton>
-                </Box>
-                {decks.map((deck) => (
-                  <DeckBox {...deck} setSelectedDeck={setSelectedDeck} />
-                ))}
-              </Box>
+              <Decks
+                deck={deck}
+                onPlay={onPlay}
+                setSelectedDeck={setSelectedDeck}
+              />
             )
             }
           </Grid>

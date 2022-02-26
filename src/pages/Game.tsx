@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import React from 'react'
 import { Box } from '@iotabots/components'
-import Player from '../components/Player'
+import Player from '../components/Game/Player'
 
 import { OPPONENT, PLAYER } from '../data/players'
-import Round from '../components/Round'
+import Round from '../components/Game/Round'
 import { BotType, CardType } from '../types'
 import { PHASES } from '../data/phases'
 

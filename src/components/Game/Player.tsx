@@ -5,9 +5,9 @@ import Health from './Health'
 import Mana from './Mana'
 import Board from './Board'
 import Hand from './Hand'
-import Deck from './Deck'
-import Cemetery from './Cemetery'
-import { CardType, PhaseType, PlayerType } from '../types'
+import Deck from '../Deck/Deck'
+import Cemetery from './Junk'
+import { CardType, PhaseType, PlayerType } from '../../types'
 
 
 interface PlayerProps extends BoxProps {

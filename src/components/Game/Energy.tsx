@@ -1,6 +1,6 @@
+import React from 'react'
 import { Typography } from '@iotabots/components'
 import { Box } from '@mui/material'
-import React from 'react'
 
 interface EnergyProps {
   value: number

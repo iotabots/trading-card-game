@@ -83,11 +83,20 @@ export interface EffectType {
   id: string
 }
 
+export interface DeckItemType {
+  id: string
+  type: string
+  name: string
+  image: string
+  mana: number
+  attack: number
+  defense: number
+  hits: number
+  count: number
+}
+
 export interface DeckType {
   id: number
   name: string
-  cardsNext: {
-    id: number
-    count: number
-  }[]
+  cards: DeckItemType[]
 }

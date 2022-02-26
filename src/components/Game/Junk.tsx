@@ -1,11 +1,11 @@
-import { Box, Typography } from '@iotabots/components'
 import React from 'react'
+import { Box, Typography } from '@iotabots/components'
 
-interface CemeteryProps {
+interface JunkProps {
   cards: number
 }
 
-const Cemetery: React.FC<CemeteryProps> = (props) => {
+const Junk: React.FC<JunkProps> = (props) => {
   const { cards } = props
   return (
     <Box display='flex'>
@@ -16,7 +16,7 @@ const Cemetery: React.FC<CemeteryProps> = (props) => {
         color='text.disabled'
         textTransform='uppercase'
       >
-        Cemetery:
+        Junk:
       </Typography>
       <Typography
         fontWeight='bold'
@@ -29,4 +29,4 @@ const Cemetery: React.FC<CemeteryProps> = (props) => {
   )
 }
 
-export default Cemetery
+export default Junk

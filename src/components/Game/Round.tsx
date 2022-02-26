@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import { LinearProgress } from '@mui/material'
-import Arrow from '../icons/Arrow'
-import Highlight from '../icons/Highlight'
+import Arrow from '../../icons/Arrow'
+import Highlight from '../../icons/Highlight'
 
 interface RoundProps {
   number: number

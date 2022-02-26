@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
-import BackCard from './BackCard'
+import BackCard from '../Game/BackCard'
 
 interface DeckProps {
   cards: number

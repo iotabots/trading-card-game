@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { CardType } from '../types'
+import { CardType } from '../../types'
 
 interface HandProps {
   hand: CardType[]
