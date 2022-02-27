@@ -18,8 +18,6 @@ interface PlayerProps extends BoxProps {
   setCurrentPlayer: (player: string) => void
   round: number
   setRound: (number: number) => void
-  // eslint-disable-next-line react/require-default-props
-  onFight?: (card: CardType) => void
 }
 
 const Player: React.FC<PlayerProps> = (props) => {
@@ -32,18 +30,16 @@ const Player: React.FC<PlayerProps> = (props) => {
     setCurrentPlayer,
     round,
     setRound,
-    onFight
   } = props
   const [hp, setHp] = React.useState(20)
   const [mp, setMp] = React.useState(0)
-  const [deck, setDeck] = React.useState(player.deck)
+  const [deck, setDeck] = React.useState<CardType[]>(player.deck)
   const [hand, setHand] = React.useState(player.hand)
   const [board, setBoard] = React.useState(player.board)
   const [cemetery, setCemetery] = React.useState([])
 
   const onActionClick = (): void => {
     if (phase.id === 0) {
-      console.log(round)
       if (round === 1) {
         onDraw(3)
       } else {
@@ -73,8 +69,7 @@ const Player: React.FC<PlayerProps> = (props) => {
     const nextDeck = deck
       .filter((element, index) => index < deck.length - number)
     const newCards = []
-    // eslint-disable-next-line no-plusplus
-    for (let i = 1; i <= number; i++) {
+    for (let i = 1; i <= number; i += 1) {
       newCards.push(deck[deck.length - i])
     }
     setHand([...hand, ...newCards])
@@ -89,15 +84,7 @@ const Player: React.FC<PlayerProps> = (props) => {
   const onPlay = (number: number): void => {
     const nextHand = hand.filter((element, index) => index !== number)
     setBoard([...board, hand[number]])
-    // setMp(mp - hand[number].cost)
-    console.log('onPlay')
     setHand(nextHand)
-  }
-
-  const onAttack = (number: number): void => {
-    // onFight(board[number])
-    // console.log('attack', board[number].attack)
-    console.log('onAttack')
   }
 
   return (
@@ -157,7 +144,7 @@ const Player: React.FC<PlayerProps> = (props) => {
         flexGrow='1'
         mx={8}
       >
-        <Board board={board} onAttack={onAttack} />
+        <Board board={board} />
         <Hand mp={mp} hand={hand} onPlay={onPlay} />
       </Box>
       <Box width={220}>

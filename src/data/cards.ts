@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 export const CARDS = [
   {
     id: '1',
@@ -221,16 +220,3 @@ export const CARDS = [
     hits: 1,
   },
 ]
-
-export const DECK = [
-  ...CARDS,
-  ...CARDS,
-  ...CARDS,
-  ...CARDS,
-  ...CARDS,
-  CARDS[0],
-  CARDS[1],
-  CARDS[2],
-]
-export const HAND = []
-export const BOARD = []

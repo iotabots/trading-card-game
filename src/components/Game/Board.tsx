@@ -4,26 +4,20 @@ import { CardType } from '../../types'
 
 interface BoardProps {
   board: CardType[]
-  onAttack: (number: number) => void
 }
 
 const Board: React.FC<BoardProps> = (props) => {
-  const { board, onAttack } = props
+  const { board } = props
   return (
     <Box
       className='board'
       display='flex'
       width='100%'
     >
-      {[0, 1, 2, 3, 4].map((item, index) => (
+      {[0, 1, 2, 3, 4].map((item) => (
         <Box
           key={item}
           component='button'
-          onClick={
-            index < board.length
-              ? () => onAttack(index)
-              : () => console.log('error')
-          }
           sx={{
             bgcolor: board[item] ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.25)',
             borderRadius: '8px',

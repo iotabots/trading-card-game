@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Box, Typography } from '@iotabots/components'
 import React from 'react'
+import { Box, Typography } from '@iotabots/components'
 import { useWeb3React } from '@web3-react/core'
-import { Contract } from 'web3-eth-contract'
-import { flexRowBetween } from '../../styles'
 
 export interface Game {
   id: number
@@ -18,7 +15,7 @@ const GamesList: React.FC<GamesListProps> = (props) => {
   console.log('games', games)
   const [loadedGames, setLoadedGames] = React.useState<any>([])
 
-  const init = async (_account: any, _library: any): Promise<void> => {
+  const init = async (): Promise<void> => {
     console.log('games[0]', games[0])
     setLoadedGames(games)
     console.log('loadedGames', loadedGames)
@@ -27,18 +24,18 @@ const GamesList: React.FC<GamesListProps> = (props) => {
   React.useEffect(() => {
     if (!!account && !!library && !!games) {
       console.log('games2', games)
-      init(account, library)
+      init()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, library, games])
+  }, [games])
 
   return (
-    <Box sx={{ ...flexRowBetween }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       {loadedGames &&
         loadedGames.map((game: any) => (
           <Box
             sx={{
-              mb: 2,
+              mb: 4,
               display: 'flex',
               alignItems: 'left',
               justifyContent: 'space-between',

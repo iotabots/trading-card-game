@@ -5,6 +5,7 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded'
 import { Button, IconButton } from '@mui/material'
 import { DeckItemType, DeckType } from '../../types'
 import DeckItem from './DeckItem'
+import { countDeck } from '../../utils/countDeck'
 
 interface EditDeckProps {
   deck: DeckType
@@ -16,11 +17,7 @@ const EditDeck: React.FC<EditDeckProps> = (props) => {
   const { deck, setSelectedDeck, setDeck } = props
   const [cards, setCards] = React.useState(deck.cards)
 
-  let count = 0
-  for (let index = 0; index < cards.length; index += 1) {
-    const element = cards[index]
-    count += element.count
-  }
+  const count = countDeck(cards)
 
   const changeCount = (
     id: string,
@@ -29,7 +26,7 @@ const EditDeck: React.FC<EditDeckProps> = (props) => {
     const updatedCards = cards.map((item): DeckItemType => {
       const updatedItem = item
       if (updatedItem.id === id) {
-        if (number > 0 && item.count < 3 && count < 33) {
+        if (number > 0 && item.count < 4 && count < 33) {
           updatedItem.count += number
         } else if (number < 0 && item.count > 0) {
           updatedItem.count += number

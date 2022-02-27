@@ -64,13 +64,8 @@ const Collection: React.FC = () => {
           }}
         >
           <Typography variant='h2'>History</Typography>
-          {/* {games && games} */}
         </Box>
-        <Grid container spacing={6}>
-          <Grid item xs={8} container spacing={6}>
-            {games && <GamesList games={games} />}
-          </Grid>
-        </Grid>
+        {games && <GamesList games={games} />}
       </Container>
     </BaseLayout>
   )
