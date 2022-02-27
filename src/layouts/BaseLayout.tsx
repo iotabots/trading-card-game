@@ -7,12 +7,16 @@ const BaseLayout: React.FC = ({ children }) => {
   const MENU = [
     {
       label: 'Game',
-      onClick: () => navigate('/')
+      onClick: () => navigate('/'),
     },
     {
       label: 'Collection',
-      onClick: () => navigate('/collection')
-    }
+      onClick: () => navigate('/collection'),
+    },
+    {
+      label: 'History',
+      onClick: () => navigate('/history'),
+    },
   ]
   return (
     <Box
@@ -21,15 +25,11 @@ const BaseLayout: React.FC = ({ children }) => {
         '& .MuiAppBar-root': {
           top: 20,
           left: 20,
-          width: 'calc(100% - 40px)'
-        }
+          width: 'calc(100% - 40px)',
+        },
       }}
     >
-      <Navigation
-        identity
-        menu={MENU}
-        mobileMenu={MENU}
-      />
+      <Navigation identity menu={MENU} mobileMenu={MENU} />
       {children}
     </Box>
   )

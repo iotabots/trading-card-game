@@ -13,40 +13,45 @@ import { DeckType } from '../types'
 import EditDeck from '../components/Deck/EditDeck'
 import Decks from '../components/Deck/Decks'
 
+import contracts from '../contracts/config'
+
 const CARDS_ABI = require('../contracts/cards.json')
-
-const CARDS_ADDRESS = '0x16Cb79ABC1907321Be809F2d3D14b9022B522D4F'
-
 const GAME_ABI = require('../contracts/game.json')
-
-const GAME_ADDRESS = '0x03aA69E81e2421c5821d3e54Ad89832470AC84f8'
 
 const Collection: React.FC = () => {
   const { account, library } = useWeb3React()
 
   // C O N T R A C T S
-  const [cardsContract, setCardsContract] =
-    React.useState<Contract | undefined>(undefined)
-  const [gameContract, setGameContract] =
-    React.useState<Contract | undefined>(undefined)
+  const [cardsContract, setCardsContract] = React.useState<
+    Contract | undefined
+  >(undefined)
+  const [gameContract, setGameContract] = React.useState<Contract | undefined>(
+    undefined
+  )
 
   const [deck, setDeck] = React.useState<DeckType>(DECK)
-  const [selectedDeck, setSelectedDeck] =
-    React.useState<number | undefined>(undefined)
+  const [selectedDeck, setSelectedDeck] = React.useState<number | undefined>(
+    undefined
+  )
   const [collection, setCollection] = React.useState<undefined[]>([])
 
   const init = async (_account: any, _library: any): Promise<void> => {
     const web3 = new Web3(_library.provider)
-    const CardsContract =
-      new web3.eth.Contract(CARDS_ABI as AbiItem[], CARDS_ADDRESS)
+    const CardsContract = new web3.eth.Contract(
+      CARDS_ABI as AbiItem[],
+      contracts.CARDS_ADDRESS
+    )
     setCardsContract(CardsContract)
 
-    const data =
-      await CardsContract.methods.getMyCollection().call({ from: account })
+    const data = await CardsContract.methods
+      .getMyCollection()
+      .call({ from: account })
     setCollection(data)
 
-    const GameContract =
-      new web3.eth.Contract(GAME_ABI as AbiItem[], GAME_ADDRESS)
+    const GameContract = new web3.eth.Contract(
+      GAME_ABI as AbiItem[],
+      contracts.GAME_ADDRESS
+    )
     setGameContract(GameContract)
   }
 
@@ -73,12 +78,14 @@ const Collection: React.FC = () => {
   return (
     <BaseLayout>
       <Container sx={{ pb: 6 }}>
-        <Box sx={{
-          mb: 6,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
+        <Box
+          sx={{
+            mb: 6,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <Typography variant='h2'>Collection</Typography>
           {cardsContract && <BuyPacks contract={cardsContract} />}
         </Box>
@@ -104,8 +111,7 @@ const Collection: React.FC = () => {
                 onPlay={onPlay}
                 setSelectedDeck={setSelectedDeck}
               />
-            )
-            }
+            )}
           </Grid>
         </Grid>
       </Container>

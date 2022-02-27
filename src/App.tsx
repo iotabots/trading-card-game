@@ -6,6 +6,7 @@ import { Web3ReactProvider } from '@web3-react/core'
 import Theme from './Theme'
 import Game from './pages/Game'
 import Collection from './pages/Collection'
+import History from './pages/History'
 
 const App: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,11 +22,12 @@ const App: React.FC = () => {
           <Routes>
             <Route path='/' element={<Game />} />
             <Route path='/collection' element={<Collection />} />
+            <Route path='/history' element={<History />} />
           </Routes>
           <CssBaseline />
         </Box>
       </Web3ReactProvider>
-    </Theme >
+    </Theme>
   )
 }
 
