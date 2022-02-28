@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
-import BackCard from './BackCard'
+import BackCard from '../Game/BackCard'
 
 interface DeckProps {
   cards: number
@@ -28,7 +28,7 @@ const Deck: React.FC<DeckProps> = (props) => {
           <BackCard
             top={`-${index * 2}px`}
             key={item}
-            className={index === deck.length - 1 ? 'active' : ''}
+          // className={index === deck.length - 1 ? 'active' : ''}
           />
         ))}
       </Box>

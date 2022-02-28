@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
-import { LinearProgress } from '@mui/material'
-import Arrow from '../icons/Arrow'
-import Highlight from '../icons/Highlight'
+import Arrow from '../../icons/Arrow'
+import Highlight from '../../icons/Highlight'
+import ButtonImage from '../../icons/Button.png'
 
 interface RoundProps {
   number: number
@@ -25,24 +25,7 @@ const Round: React.FC<RoundProps> = (props) => {
     setCurrentPlayer
   } = props
   const myTurn = currentPlayer === 'player'
-  const [count, setCount] = React.useState(0)
-  const [countInTimeout, setCountInTimeout] = React.useState(0)
-  const countRef = React.useRef(count)
-  countRef.current = count
-
-  const getCountTimeout = (): void => {
-    setTimeout(() => {
-      setCountInTimeout(countRef.current)
-    }, 2000)
-  }
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setCountInTimeout(count) // count is 0 here
-    }, 3000)
-    setCount(5) // Update count to be 5 after timeout is scheduled
-  }, [])
-
+  const [count] = React.useState(0)
 
   const onNextPhase = (): void => {
     if (phase < 4) {
@@ -59,12 +42,13 @@ const Round: React.FC<RoundProps> = (props) => {
       onClick={onNextPhase}
       sx={{
         position: 'fixed',
+        zIndex: 11,
         top: '50%',
-        left: 0,
+        right: 40,
         pl: 4,
         display: 'flex',
         transform: 'translateY(-50%)',
-        flexDirection: 'row',
+        flexDirection: 'row-reverse',
         alignItems: 'center',
         '&:hover': {
           cursor: 'pointer'
@@ -95,7 +79,7 @@ const Round: React.FC<RoundProps> = (props) => {
             borderWidth: '4px',
             borderColor: myTurn ? 'rgba(0,0,0,0.5)' : 'background.paper',
           }}>
-          <Typography variant='h5'>{countInTimeout}</Typography>
+          <Typography variant='h5'>{count}</Typography>
         </Box>
         <Box position='absolute'
           top={0}
@@ -119,34 +103,30 @@ const Round: React.FC<RoundProps> = (props) => {
         </Box>
       </Box>
       <Box
-        display='flex'
-        alignItems='center'
-        position='relative'
-        zIndex={1}
-        ml={-5}
-        pl={5}
-        width='120px'
-        height='40px'
-        boxSizing='border-box'
         sx={{
-          bgcolor: myTurn ? 'primary.main' : '#070A10',
-          borderTopRightRadius: '8px',
-          borderBottomRightRadius: '8px'
+          position: 'relative',
+          zIndex: 1,
+          boxSizing: 'border-box',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: 250,
+          height: 65,
+          mt: 4,
+          backgroundImage: `url(${ButtonImage})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
         }}
       >
-        <Typography fontWeight='bold'>{title}</Typography>
+        <Typography variant='h6'
+          fontWeight='bold'
+          sx={{
+            mb: '20px',
+          }}>
+          {title}
+        </Typography>
       </Box>
-      <LinearProgress
-        value={80}
-        sx={{
-          position: 'absolute',
-          left: 200,
-          width: 'calc(100vw - 200px)',
-          '&.MuiLinearProgress-root': {
-            bgcolor: 'rgba(0,0,0,0.5)'
-          }
-        }}
-      />
+
     </Box >
   )
 }

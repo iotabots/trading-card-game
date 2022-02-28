@@ -1,6 +1,6 @@
-import { Box } from '@iotabots/components'
 import React from 'react'
-import Drop from '../icons/Drop'
+import { Box } from '@iotabots/components'
+import Drop from '../../icons/Drop'
 import Energy from './Energy'
 
 const MAX_MANA = 10
