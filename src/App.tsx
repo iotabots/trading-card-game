@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, CssBaseline } from '@iotabots/components'
+import { Box, CssBaseline, Frame } from '@iotabots/components'
 import { Route, Routes } from 'react-router-dom'
 import { Web3Provider } from '@ethersproject/providers'
 import { Web3ReactProvider } from '@web3-react/core'
@@ -18,10 +18,11 @@ const App: React.FC = () => {
   return (
     <Theme>
       <Web3ReactProvider getLibrary={getLibrary}>
-        <Box bgcolor='background.paper' minHeight='100vh'>
+        <Frame />
+        <Box bgcolor='#172034' minHeight='100vh'>
           <Routes>
-            <Route path='/' element={<Game />} />
-            <Route path='/collection' element={<Collection />} />
+            <Route path='/' element={<Collection />} />
+            <Route path='/game' element={<Game />} />
             <Route path='/history' element={<History />} />
           </Routes>
           <CssBaseline />

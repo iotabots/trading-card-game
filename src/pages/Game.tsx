@@ -19,6 +19,7 @@ const Game: React.FC = () => {
   return (
     <Box>
       <Player
+        className='opponent'
         player={players.opponent}
         onTurn={currentPlayer === players.opponent.type}
         phase={PHASES[phase]}

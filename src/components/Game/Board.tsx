@@ -22,7 +22,7 @@ const Board: React.FC<BoardProps> = (props) => {
             bgcolor: board[item] ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.25)',
             borderRadius: '8px',
             border: 'none',
-            height: 200,
+            height: 240,
             width: '100%',
             mx: 2,
             display: 'flex',
@@ -33,10 +33,11 @@ const Board: React.FC<BoardProps> = (props) => {
             <Box
               sx={{
                 backgroundImage: `url(${board[item].image})`,
-                height: 140,
-                width: 100,
+                height: '90%',
+                width: '100%',
                 backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat'
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
               }} />
           )}
 

@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import Arrow from '../../icons/Arrow'
 import Highlight from '../../icons/Highlight'
+import ButtonImage from '../../icons/Button.png'
 
 interface RoundProps {
   number: number
@@ -41,12 +42,13 @@ const Round: React.FC<RoundProps> = (props) => {
       onClick={onNextPhase}
       sx={{
         position: 'fixed',
+        zIndex: 11,
         top: '50%',
-        left: 0,
+        right: 40,
         pl: 4,
         display: 'flex',
         transform: 'translateY(-50%)',
-        flexDirection: 'row',
+        flexDirection: 'row-reverse',
         alignItems: 'center',
         '&:hover': {
           cursor: 'pointer'
@@ -101,23 +103,30 @@ const Round: React.FC<RoundProps> = (props) => {
         </Box>
       </Box>
       <Box
-        display='flex'
-        alignItems='center'
-        position='relative'
-        zIndex={1}
-        ml={-5}
-        pl={5}
-        width='120px'
-        height='40px'
-        boxSizing='border-box'
         sx={{
-          bgcolor: myTurn ? 'primary.main' : '#070A10',
-          borderTopRightRadius: '8px',
-          borderBottomRightRadius: '8px'
+          position: 'relative',
+          zIndex: 1,
+          boxSizing: 'border-box',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: 250,
+          height: 65,
+          mt: 4,
+          backgroundImage: `url(${ButtonImage})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
         }}
       >
-        <Typography fontWeight='bold'>{title}</Typography>
+        <Typography variant='h6'
+          fontWeight='bold'
+          sx={{
+            mb: '20px',
+          }}>
+          {title}
+        </Typography>
       </Box>
+
     </Box >
   )
 }

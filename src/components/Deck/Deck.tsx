@@ -28,7 +28,7 @@ const Deck: React.FC<DeckProps> = (props) => {
           <BackCard
             top={`-${index * 2}px`}
             key={item}
-            className={index === deck.length - 1 ? 'active' : ''}
+          // className={index === deck.length - 1 ? 'active' : ''}
           />
         ))}
       </Box>

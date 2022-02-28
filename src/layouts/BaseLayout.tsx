@@ -22,6 +22,7 @@ const BaseLayout: React.FC = ({ children }) => {
     <Box
       pt={10}
       sx={{
+        position: 'relative',
         '& .MuiAppBar-root': {
           top: 20,
           left: 20,

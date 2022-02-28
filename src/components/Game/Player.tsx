@@ -1,12 +1,12 @@
 import React from 'react'
 import { Avatar, Box, Button, Typography } from '@iotabots/components'
-import { BoxProps } from '@mui/material'
+import { BoxProps, SxProps } from '@mui/material'
 import Health from './Health'
 import Mana from './Mana'
 import Board from './Board'
 import Hand from './Hand'
 import Deck from '../Deck/Deck'
-import Cemetery from './Junk'
+import Junk from './Junk'
 import { CardType, PhaseType, PlayerType } from '../../types'
 
 
@@ -36,7 +36,7 @@ const Player: React.FC<PlayerProps> = (props) => {
   const [deck, setDeck] = React.useState<CardType[]>(player.deck)
   const [hand, setHand] = React.useState(player.hand)
   const [board, setBoard] = React.useState(player.board)
-  const [cemetery, setCemetery] = React.useState([])
+  const [junk, setJunk] = React.useState([])
 
   const onActionClick = (): void => {
     if (phase.id === 0) {
@@ -87,55 +87,85 @@ const Player: React.FC<PlayerProps> = (props) => {
     setHand(nextHand)
   }
 
-  return (
-    <Box
-      className={className}
-      sx={{
-        height: '50vh',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        flexGrow: 1,
-        p: 8,
-        '&.me': {
-          alignItems: 'flex-end',
+  const playerStyles: SxProps = {
+    position: 'relative',
+    overflow: 'hidden',
+    height: '50vh',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    flexGrow: 1,
+    p: 8,
 
-          '& .board-container': {
-            flexDirection: 'column'
-          },
+    '&.opponent': {
+      '& .card': {
+        // eslint-disable-next-line max-len
+        backgroundImage: `url('https://cdn.discordapp.com/attachments/420674357652750367/946485073081946132/Back_copy.png')`,
+      },
+    },
 
-          '& .hand': {
-            mt: 6,
-            mb: 0,
-          }
+    '&.me': {
+      alignItems: 'flex-start',
+
+      '& .board-container': {
+        flexDirection: 'column',
+      },
+
+      '& .player-column': {
+        flexDirection: 'column',
+
+        '& .player-info': {
+          mb: 4,
+          mt: 0
         }
-      }}>
-      <Box
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
+      },
+
+      '& .hand': {
+        top: 'auto',
+        bottom: 0,
+        transform: 'translate(-50%, 30%)',
+      }
+    },
+
+    '& .hand': {
+      position: 'absolute',
+      top: 0,
+      bottom: 'auto',
+      left: '50%',
+      transform: 'translate(-50%, -30%) rotate(180deg)',
+    },
+  }
+
+  return (
+    <Box className={className} sx={{ ...playerStyles }}>
+      <Box className='player-column'
         sx={{
-          width: 240,
-          p: 4,
-          bgcolor: 'rgba(0,0,0,0.5)',
-          borderRadius: '8px'
-        }}
-      >
-        <Box display='flex' flexDirection='column' alignItems='center'>
-          <Avatar sx={{ height: 100, width: 100 }} src={player.avatar} />
-          <Typography fontWeight='bold' my={2}>{player.id}</Typography>
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column-reverse',
+          mr: 2,
+        }}>
+        <Box
+          className='player-info'
+          sx={{
+            width: 240,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            p: 4,
+            mt: 4,
+            bgcolor: '#060A12',
+            borderRadius: '8px'
+          }}
+        >
+          <Box display='flex' flexDirection='column' alignItems='center'>
+            <Avatar sx={{ height: 100, width: 100 }} src={player.avatar} />
+            <Typography fontWeight='bold' my={2}>{player.id}</Typography>
+          </Box>
+          <Health hp={hp} />
+          <Mana mp={mp} />
         </Box>
-        <Health hp={hp} />
-        <Mana mp={mp} />
-        {onTurn && (
-          <Button
-            onClick={onActionClick}
-            fullWidth
-            sx={{ mt: 4 }}
-          >
-            {phase.label}
-          </Button>
-        )}
+        <Junk cards={junk.length} />
       </Box>
       <Box
         className='board-container'
@@ -143,13 +173,15 @@ const Player: React.FC<PlayerProps> = (props) => {
         display='flex'
         flexGrow='1'
         mx={8}
+        sx={{
+          height: '60%',
+        }}
       >
         <Board board={board} />
-        <Hand mp={mp} hand={hand} onPlay={onPlay} />
       </Box>
-      <Box width={220}>
+      <Hand mp={mp} hand={hand} onPlay={onPlay} />
+      <Box sx={{ width: 200, ml: 8 }}>
         <Deck cards={deck.length} />
-        <Cemetery cards={cemetery.length} />
       </Box>
     </Box >
   )

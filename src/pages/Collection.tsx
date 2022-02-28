@@ -5,6 +5,7 @@ import { useWeb3React } from '@web3-react/core'
 import Web3 from 'web3'
 import { Contract } from 'web3-eth-contract'
 import { AbiItem } from 'web3-utils'
+import { useNavigate } from 'react-router-dom'
 import BaseLayout from '../layouts/BaseLayout'
 import BuyPacks from '../components/Collection/BuyPacks'
 import CollectionItem from '../components/Collection/CollectionItem'
@@ -13,13 +14,14 @@ import { DeckType } from '../types'
 import EditDeck from '../components/Deck/EditDeck'
 import Decks from '../components/Deck/Decks'
 
-import contracts from '../contracts/config'
+import { config } from '../contracts/config'
 
 const CARDS_ABI = require('../contracts/cards.json')
 const GAME_ABI = require('../contracts/game.json')
 
 const Collection: React.FC = () => {
   const { account, library } = useWeb3React()
+  const navigate = useNavigate()
 
   // C O N T R A C T S
   const [cardsContract, setCardsContract] =
@@ -40,7 +42,7 @@ const Collection: React.FC = () => {
     const web3 = new Web3(library.provider)
     const CardsContract = new web3.eth.Contract(
       CARDS_ABI as AbiItem[],
-      contracts.CARDS_ADDRESS
+      config.CARDS_ADDRESS
     )
     setCardsContract(CardsContract)
 
@@ -51,7 +53,7 @@ const Collection: React.FC = () => {
 
     const GameContract = new web3.eth.Contract(
       GAME_ABI as AbiItem[],
-      contracts.GAME_ADDRESS
+      config.GAME_ADDRESS
     )
     setGameContract(GameContract)
   }
@@ -64,6 +66,8 @@ const Collection: React.FC = () => {
   }, [account, library])
 
   const onPlay = async (): Promise<void> => {
+    // Timeout
+
     const array: string[] = []
 
     deck.cards.map((item): void => {
@@ -71,6 +75,7 @@ const Collection: React.FC = () => {
         array.push(item.id)
       }
     })
+
     if (gameContract) {
       const playResponse =
         await gameContract.methods.play(array).send({ from: account })
@@ -83,7 +88,25 @@ const Collection: React.FC = () => {
       const gameResponse =
         await gameContract.methods.games(gamesCountResponse - 1)
           .call({ from: account })
-      console.log('Game State', gameResponse)
+
+      if (gameResponse.player1.addr === account) {
+        console.log('I am player 1', gameResponse)
+        const interval = setInterval(
+          async () => {
+            console.log('Tick')
+            const gameResponse2 =
+              await gameContract.methods.games(gamesCountResponse - 1)
+                .call({ from: account })
+
+            if (gameResponse2.player2.addr !== config.NULL_ADDRESS) {
+              clearInterval(interval)
+              navigate('/game')
+            }
+          }, 1000
+        )
+      } else if (gameResponse.player2.addr === account) {
+        navigate('/game')
+      }
     }
   }
 
