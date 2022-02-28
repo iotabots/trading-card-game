@@ -15,17 +15,22 @@ import EditDeck from '../components/Deck/EditDeck'
 import Decks from '../components/Deck/Decks'
 
 import { config } from '../contracts/config'
+import { GameContext } from '../contexts/GameContext'
 
 const CARDS_ABI = require('../contracts/cards.json')
 const GAME_ABI = require('../contracts/game.json')
 
 const Collection: React.FC = () => {
   const { account, library } = useWeb3React()
+  const { setGameId, setGameState } = React.useContext(GameContext)
   const navigate = useNavigate()
 
   // C O N T R A C T S
   const [cardsContract, setCardsContract] =
     React.useState<Contract | undefined>(undefined)
+
+  const [queueTime, setQueueTime] =
+    React.useState<number>(0)
 
   const [gameContract, setGameContract] =
     React.useState<Contract | undefined>(undefined)
@@ -85,6 +90,8 @@ const Collection: React.FC = () => {
         await gameContract.methods.getGamesCount().call({ from: account })
       console.log('Games Count', gamesCountResponse)
 
+      setGameId(gamesCountResponse - 1)
+
       const gameResponse =
         await gameContract.methods.games(gamesCountResponse - 1)
           .call({ from: account })
@@ -94,17 +101,20 @@ const Collection: React.FC = () => {
         const interval = setInterval(
           async () => {
             console.log('Tick')
+            setQueueTime(queueTime + 1)
             const gameResponse2 =
               await gameContract.methods.games(gamesCountResponse - 1)
                 .call({ from: account })
 
             if (gameResponse2.player2.addr !== config.NULL_ADDRESS) {
               clearInterval(interval)
+              setGameState(gameResponse2)
               navigate('/game')
             }
-          }, 1000
+          }, 5000
         )
       } else if (gameResponse.player2.addr === account) {
+        setGameState(gameResponse)
         navigate('/game')
       }
     }
@@ -144,6 +154,7 @@ const Collection: React.FC = () => {
               <Decks
                 deck={deck}
                 onPlay={onPlay}
+                queueTime={queueTime}
                 setSelectedDeck={setSelectedDeck}
               />
             )}

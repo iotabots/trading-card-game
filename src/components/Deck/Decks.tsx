@@ -9,10 +9,11 @@ interface DecksProps {
   deck: DeckType
   setSelectedDeck: Dispatch<SetStateAction<number | undefined>>
   onPlay: () => void
+  queueTime: number
 }
 
 const Decks: React.FC<DecksProps> = (props) => {
-  const { deck, setSelectedDeck, onPlay } = props
+  const { deck, setSelectedDeck, onPlay, queueTime } = props
 
   return (
     <Box sx={{
@@ -41,7 +42,7 @@ const Decks: React.FC<DecksProps> = (props) => {
         fullWidth
         onClick={onPlay}
       >
-        Play
+        {queueTime === 0 ? 'Play' : queueTime}
       </Button>
     </Box>
   )
