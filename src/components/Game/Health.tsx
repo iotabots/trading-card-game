@@ -4,15 +4,15 @@ import { Box } from '@iotabots/components'
 import Energy from './Energy'
 
 interface HealthProps {
-  hp: string
+  health: number
 }
 
 const Health: React.FC<HealthProps> = (props) => {
-  const { hp } = props
+  const { health } = props
   return (
     <Box mb={5} width='100%'>
       <Energy
-        value={parseInt(hp, 2)}
+        value={health}
         max={20}
         icon={<FavoriteIcon />}
         color='error'

@@ -91,7 +91,7 @@ const Game: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, gameId, gameState])
 
-  const [round, setRound] = React.useState(1)
+  const [round] = React.useState(gameState?.turn || '0')
 
   const [phase, setPhase] = React.useState(0)
   console.log(`${gameState} ${gameId}`)
@@ -99,9 +99,12 @@ const Game: React.FC = () => {
   console.log('Game: player', player)
   return (
     <Box>
-      <Navigation identity menu={MENU} mobileMenu={MENU} />
+      <Box sx={{ display: 'none' }}>
+
+        <Navigation identity menu={MENU} mobileMenu={MENU} />
+      </Box>
       {opponent && <Player className='opponent' player={opponent} />}
-      <Round number={round} title={PHASES[phase].label} />
+      {gameState && <Round round={round} phaseId={gameState?.phase || ''} />}
       {player && <Player className='me' player={player} />}
     </Box>
   )

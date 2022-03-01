@@ -5,27 +5,58 @@ import Highlight from '../../icons/Highlight'
 import ButtonImage from '../../icons/Button.png'
 
 interface RoundProps {
-  number: number
-  title: string
+  round: string
+  phaseId: string
 }
 
 const Round: React.FC<RoundProps> = (props) => {
   const {
-    number,
-    title,
+    round,
+    phaseId,
   } = props
   const myTurn = 'player'
-  const [count] = React.useState(0)
 
-  // const onNextPhase = (): void => {
-  //   if (phase < 4) {
-  //     setPhase(phase + 1)
-  //   } else {
-  //     setPhase(0)
-  //     setRound(number + 1)
-  //     setCurrentPlayer(myTurn ? 'opponent' : 'player')
-  //   }
-  // }
+  let phase = {
+    value: '',
+    label: ''
+  }
+
+  switch (phaseId) {
+    case '1':
+      phase = {
+        value: 'draw',
+        label: 'Draw'
+      }
+      break
+
+    case '2':
+      phase = {
+        value: 'play',
+        label: 'Start Fight'
+      }
+      break
+
+    case '3':
+      phase = {
+        value: 'fight',
+        label: 'End Fight'
+      }
+      break
+
+    case '4':
+      phase = {
+        value: 'play',
+        label: 'End Turn'
+      }
+      break
+
+    default:
+      phase = {
+        value: 'connect',
+        label: 'Connecting...'
+      }
+      break
+  }
 
   return (
     <Box
@@ -69,7 +100,7 @@ const Round: React.FC<RoundProps> = (props) => {
             borderWidth: '4px',
             borderColor: myTurn ? 'rgba(0,0,0,0.5)' : 'background.paper',
           }}>
-          <Typography variant='h5'>{count}</Typography>
+          <Typography variant='h5'>{round}</Typography>
         </Box>
         <Box position='absolute'
           top={0}
@@ -113,7 +144,7 @@ const Round: React.FC<RoundProps> = (props) => {
           sx={{
             mb: '20px',
           }}>
-          {title}
+          {phase.label}
         </Typography>
       </Box>
 

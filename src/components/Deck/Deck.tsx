@@ -12,11 +12,7 @@ const Deck: React.FC<DeckProps> = (props) => {
   const { cards } = props
 
   const deck = cards.cards.filter((card: string) => card !== '0')
-  // const deck = []
-  // // eslint-disable-next-line no-plusplus
-  // for (let i = 0; i < cards; i++) {
-  //   deck.push(i)
-  // }
+
   return (
     <Box sx={{
       width: 142,
@@ -31,7 +27,6 @@ const Deck: React.FC<DeckProps> = (props) => {
           <BackCard
             top={`-${index * 2}px`}
             key={item}
-          // className={index === deck.length - 1 ? 'active' : ''}
           />
         ))}
       </Box>
@@ -50,7 +45,7 @@ const Deck: React.FC<DeckProps> = (props) => {
           fontSize={12}
           textTransform='uppercase'
         >
-          {cards}
+          {deck.length}
         </Typography>
       </Box>
     </Box>

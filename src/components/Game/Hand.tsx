@@ -4,12 +4,14 @@ import { Box } from '@mui/material'
 import { CardStack } from '../../types'
 
 interface HandProps {
-  hand: CardStack
-  mp: string
+  hand: CardStack | undefined
+  mana: number
 }
 
 const Hand: React.FC<HandProps> = (props) => {
-  const { hand, mp } = props
+  const { hand, mana } = props
+  const deck = hand && hand.cards.filter((card: string) => card !== '0')
+
   return (
     <Box
       className='hand'
@@ -18,9 +20,8 @@ const Hand: React.FC<HandProps> = (props) => {
       flexDirection='row'
       justifyContent='center'
       mb={6}
-
     >
-      {parseInt(hand.size, 2) > 0 && hand.cards.flatMap((card, index) => {
+      {deck && deck.length > 0 && deck.flatMap((card, index) => {
         let cardAngle
         let translateX = 0
         let translateY = 0
@@ -40,7 +41,7 @@ const Hand: React.FC<HandProps> = (props) => {
           <Box
             className='card'
             onClick={
-              parseInt(mp, 2) >= 0
+              mana >= 0
                 ? () => console.log('onPlay')
                 : () => console.log('error')
             }

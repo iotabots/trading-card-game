@@ -1,13 +1,17 @@
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import JunkIcon from '../../icons/Junk'
+import { CardStack } from '../../types'
 
 interface JunkProps {
-  cards: string
+  cards: CardStack
 }
 
 const Junk: React.FC<JunkProps> = (props) => {
   const { cards } = props
+
+  const junk = cards.cards.filter((card: string) => card !== '0')
+
   return (
     <Box sx={{
       display: 'flex',
@@ -25,7 +29,7 @@ const Junk: React.FC<JunkProps> = (props) => {
           ml: 4
         }}
       >
-        {cards}
+        {junk.length}
       </Typography>
     </Box>
   )

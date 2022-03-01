@@ -6,16 +6,16 @@ import Energy from './Energy'
 const MAX_MANA = 10
 
 interface ManaProps {
-  mp: string
+  mana: number
 }
 
 const Mana: React.FC<ManaProps> = (props) => {
-  const { mp } = props
+  const { mana } = props
 
   return (
     <Box mb={4} width='100%'>
       <Energy
-        value={parseInt(mp, 2)}
+        value={mana}
         max={MAX_MANA}
         icon={<Drop />}
         color='info'
