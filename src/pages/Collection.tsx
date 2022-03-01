@@ -41,8 +41,6 @@ const Collection: React.FC = () => {
   )
   const [collection, setCollection] = React.useState<undefined[]>([])
 
-  console.log('collection', collection)
-
   const init = async (): Promise<void> => {
     const web3 = new Web3(library.provider)
     const CardsContract = new web3.eth.Contract(
@@ -95,7 +93,7 @@ const Collection: React.FC = () => {
       const gameResponse =
         await gameContract.methods.games(gamesCountResponse - 1)
           .call({ from: account })
-
+      console.log('GameResponse', gameResponse)
       if (gameResponse.player1.addr === account) {
         console.log('I am player 1', gameResponse)
         const interval = setInterval(
@@ -105,10 +103,12 @@ const Collection: React.FC = () => {
             const gameResponse2 =
               await gameContract.methods.games(gamesCountResponse - 1)
                 .call({ from: account })
-
+            console.log('hello')
+            console.log('config null address', config.NULL_ADDRESS)
             if (gameResponse2.player2.addr !== config.NULL_ADDRESS) {
               clearInterval(interval)
               setGameState(gameResponse2)
+              console.log('gameResponse2', gameResponse2)
               navigate('/game')
             }
           }, 5000
@@ -116,6 +116,8 @@ const Collection: React.FC = () => {
       } else if (gameResponse.player2.addr === account) {
         setGameState(gameResponse)
         navigate('/game')
+      } else {
+        console.log('error')
       }
     }
   }

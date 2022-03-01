@@ -2,18 +2,21 @@
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import BackCard from '../Game/BackCard'
+import { CardStack } from '../../types'
 
 interface DeckProps {
-  cards: number
+  cards: CardStack
 }
 
 const Deck: React.FC<DeckProps> = (props) => {
   const { cards } = props
-  const deck = []
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < cards; i++) {
-    deck.push(i)
-  }
+
+  const deck = cards.cards.filter((card: string) => card !== '0')
+  // const deck = []
+  // // eslint-disable-next-line no-plusplus
+  // for (let i = 0; i < cards; i++) {
+  //   deck.push(i)
+  // }
   return (
     <Box sx={{
       width: 142,

@@ -7,39 +7,29 @@ import ButtonImage from '../../icons/Button.png'
 interface RoundProps {
   number: number
   title: string
-  currentPlayer: string
-  setCurrentPlayer: (player: string) => void
-  setRound: (number: number) => void
-  phase: number
-  setPhase: (number: number) => void
 }
 
 const Round: React.FC<RoundProps> = (props) => {
   const {
     number,
     title,
-    currentPlayer,
-    setRound,
-    phase,
-    setPhase,
-    setCurrentPlayer
   } = props
-  const myTurn = currentPlayer === 'player'
+  const myTurn = 'player'
   const [count] = React.useState(0)
 
-  const onNextPhase = (): void => {
-    if (phase < 4) {
-      setPhase(phase + 1)
-    } else {
-      setPhase(0)
-      setRound(number + 1)
-      setCurrentPlayer(myTurn ? 'opponent' : 'player')
-    }
-  }
+  // const onNextPhase = (): void => {
+  //   if (phase < 4) {
+  //     setPhase(phase + 1)
+  //   } else {
+  //     setPhase(0)
+  //     setRound(number + 1)
+  //     setCurrentPlayer(myTurn ? 'opponent' : 'player')
+  //   }
+  // }
 
   return (
     <Box
-      onClick={onNextPhase}
+      onClick={() => console.log('todo')} // onNextPhase
       sx={{
         position: 'fixed',
         zIndex: 11,

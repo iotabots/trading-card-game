@@ -3,7 +3,7 @@ import { Box, Typography } from '@iotabots/components'
 import JunkIcon from '../../icons/Junk'
 
 interface JunkProps {
-  cards: number
+  cards: string
 }
 
 const Junk: React.FC<JunkProps> = (props) => {

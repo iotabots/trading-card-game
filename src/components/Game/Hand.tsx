@@ -1,16 +1,15 @@
 /* eslint-disable max-len */
 import React from 'react'
 import { Box } from '@mui/material'
-import { CardType } from '../../types'
+import { CardStack } from '../../types'
 
 interface HandProps {
-  hand: CardType[]
-  onPlay: (number: number) => void
-  mp: number
+  hand: CardStack
+  mp: string
 }
 
 const Hand: React.FC<HandProps> = (props) => {
-  const { hand, onPlay, mp } = props
+  const { hand, mp } = props
   return (
     <Box
       className='hand'
@@ -21,12 +20,12 @@ const Hand: React.FC<HandProps> = (props) => {
       mb={6}
 
     >
-      {hand.length > 0 && hand.flatMap((card, index) => {
+      {parseInt(hand.size, 2) > 0 && hand.cards.flatMap((card, index) => {
         let cardAngle
         let translateX = 0
         let translateY = 0
         const angle = 15
-        const { length } = hand
+        const length = parseInt(hand.size, 2)
         const sideElements = Math.floor(length / 2)
         const increment = angle / sideElements
         translateX = increment * (sideElements - index)
@@ -41,13 +40,13 @@ const Hand: React.FC<HandProps> = (props) => {
           <Box
             className='card'
             onClick={
-              mp >= card.mana
-                ? () => onPlay(index)
+              parseInt(mp, 2) >= 0
+                ? () => console.log('onPlay')
                 : () => console.log('error')
             }
-            key={card.id}
+            key={card}
             sx={{
-              backgroundImage: `url(${card.image})`,
+              backgroundImage: `url(https://assets.iotabots.io/tcg/${card}.png)`,
               height: '200px',
               width: '160px',
               backgroundSize: 'contain',

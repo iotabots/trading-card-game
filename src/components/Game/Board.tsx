@@ -1,9 +1,8 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { CardType } from '../../types'
 
 interface BoardProps {
-  board: CardType[]
+  board: string[]
 }
 
 const Board: React.FC<BoardProps> = (props) => {
@@ -32,7 +31,7 @@ const Board: React.FC<BoardProps> = (props) => {
           {board[item] && (
             <Box
               sx={{
-                backgroundImage: `url(${board[item].image})`,
+                backgroundImage: `url(${board[item]})`,
                 height: '90%',
                 width: '100%',
                 backgroundSize: 'contain',

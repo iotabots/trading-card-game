@@ -7,85 +7,75 @@ import Board from './Board'
 import Hand from './Hand'
 import Deck from '../Deck/Deck'
 import Junk from './Junk'
-import { CardType, PhaseType, PlayerType } from '../../types'
+import { CardType, PlayerType } from '../../types'
+import { GameContext } from '../../contexts/GameContext'
 
 
 interface PlayerProps extends BoxProps {
-  player: PlayerType
-  onTurn: boolean
-  phase: PhaseType
-  setPhase: (number: number) => void
-  setCurrentPlayer: (player: string) => void
-  round: number
-  setRound: (number: number) => void
+  player: PlayerType | undefined
 }
 
 const Player: React.FC<PlayerProps> = (props) => {
   const {
     player,
     className,
-    onTurn,
-    phase,
-    setPhase,
-    setCurrentPlayer,
-    round,
-    setRound,
   } = props
-  const [hp, setHp] = React.useState(20)
-  const [mp, setMp] = React.useState(0)
-  const [deck, setDeck] = React.useState<CardType[]>(player.deck)
-  const [hand, setHand] = React.useState(player.hand)
-  const [board, setBoard] = React.useState(player.board)
-  const [junk, setJunk] = React.useState([])
+  const { gameState } = React.useContext(GameContext)
+  const [hp, setHp] = React.useState(player?.health)
+  const [mp, setMp] = React.useState(player?.mana)
+  const [deck, setDeck] = React.useState(player?.deck)
+  const [hand, setHand] = React.useState(player?.hand)
+  const [board, setBoard] = React.useState(player?.botZone)
+  const [junk, setJunk] = React.useState(player?.junk)
 
-  const onActionClick = (): void => {
-    if (phase.id === 0) {
-      if (round === 1) {
-        onDraw(3)
-      } else {
-        onDraw(1)
-      }
-      onDraw(round === 1 ? 3 : 1)
-      setPhase(phase.id + 1)
-    } else if (phase.id === 1) {
-      setPhase(phase.id + 1)
-    } else if (phase.id === 2) {
-      setPhase(phase.id + 1)
-    } else if (phase.id === 3) {
-      setPhase(phase.id + 1)
-    } else if (phase.id === 4) {
-      setPhase(0)
-      setCurrentPlayer(player.type === 'player' ? 'opponent' : 'player')
-      if (player.type === 'player') {
-        setCurrentPlayer('opponent')
-      } else {
-        setCurrentPlayer('player')
-        setRound(round + 1)
-      }
-    }
-  }
+  // const onActionClick = (): void => {
+  //   if (gameState.phase === '0') {
+  //     if (round === 1) {
+  //       onDraw(3)
+  //     } else {
+  //       onDraw(1)
+  //     }
+  //     onDraw(round === 1 ? 3 : 1)
+  //     setPhase(phase.id + 1)
+  //   } else if (phase.id === 1) {
+  //     setPhase(phase.id + 1)
+  //   } else if (phase.id === 2) {
+  //     setPhase(phase.id + 1)
+  //   } else if (phase.id === 3) {
+  //     setPhase(phase.id + 1)
+  //   } else if (phase.id === 4) {
+  //     setPhase(0)
+  //     setCurrentPlayer(player.type === 'player' ? 'opponent' : 'player')
+  //     if (player.type === 'player') {
+  //       setCurrentPlayer('opponent')
+  //     } else {
+  //       setCurrentPlayer('player')
+  //       setRound(round + 1)
+  //     }
+  //   }
+  // }
 
-  const onDraw = (number: number): void => {
-    const nextDeck = deck
-      .filter((element, index) => index < deck.length - number)
-    const newCards = []
-    for (let i = 1; i <= number; i += 1) {
-      newCards.push(deck[deck.length - i])
-    }
-    setHand([...hand, ...newCards])
-    setDeck(nextDeck)
-    let manaGain = round
-    if (mp + round > 10) {
-      manaGain = 10
-    }
-    setMp(mp + manaGain)
-  }
+  // const onDraw = (number: number): void => {
+  //   const nextDeck = deck
+  //     .filter((element, index) => index < deck.length - number)
+  //   const newCards = []
+  //   for (let i = 1; i <= number; i += 1) {
+  //     newCards.push(deck[deck.length - i])
+  //   }
+  //   setHand([...hand, ...newCards])
+  //   setDeck(nextDeck)
+  //   let manaGain = round
+  //   if (mp + round > 10) {
+  //     manaGain = 10
+  //   }
+  //   setMp(mp + manaGain)
+  // }
 
-  const onPlay = (number: number): void => {
-    const nextHand = hand.filter((element, index) => index !== number)
-    setBoard([...board, hand[number]])
-    setHand(nextHand)
-  }
+  // const onPlay = (number: number): void => {
+  //   const nextHand = hand.filter((element, index) => index !== number)
+  //   setBoard([...board, hand[number]])
+  //   setHand(nextHand)
+  // }
 
   const playerStyles: SxProps = {
     position: 'relative',
@@ -159,13 +149,17 @@ const Player: React.FC<PlayerProps> = (props) => {
           }}
         >
           <Box display='flex' flexDirection='column' alignItems='center'>
-            <Avatar sx={{ height: 100, width: 100 }} src={player.avatar} />
-            <Typography fontWeight='bold' my={2}>{player.id}</Typography>
+            <Avatar
+              sx={{ height: 100, width: 100 }}
+              src='https://assets.iotabots.io/compressed/1.png' />
+            <Typography fontWeight='bold' my={2}>
+              {player?.addr || 'Peter'}
+            </Typography>
           </Box>
-          <Health hp={hp} />
-          <Mana mp={mp} />
+          {hp && <Health hp={hp} />}
+          {mp && <Mana mp={mp} />}
         </Box>
-        <Junk cards={junk.length} />
+        {junk && <Junk cards={junk.size} />}
       </Box>
       <Box
         className='board-container'
@@ -177,11 +171,11 @@ const Player: React.FC<PlayerProps> = (props) => {
           height: '60%',
         }}
       >
-        <Board board={board} />
+        {board && <Board board={board.cards} />}
       </Box>
-      <Hand mp={mp} hand={hand} onPlay={onPlay} />
+      {mp && hand && <Hand mp={mp} hand={hand} />}
       <Box sx={{ width: 200, ml: 8 }}>
-        <Deck cards={deck.length} />
+        {deck && <Deck cards={deck} />}
       </Box>
     </Box >
   )
