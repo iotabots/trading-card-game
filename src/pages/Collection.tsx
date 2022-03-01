@@ -71,10 +71,7 @@ const Collection: React.FC = () => {
   }, [account, library])
 
   const onPlay = async (): Promise<void> => {
-    // Timeout
-
     const array: string[] = []
-
     deck.cards.map((item): void => {
       for (let index = 0; index < item.count; index += 1) {
         array.push(item.id)
@@ -82,38 +79,32 @@ const Collection: React.FC = () => {
     })
 
     if (gameContract) {
-      const playResponse = await gameContract.methods
+      // Join Queue
+      await gameContract.methods
         .play(array)
         .send({ from: account })
-      // console.log('Play Response', playResponse)
 
+      // Get GameId
       const gamesCountResponse = await gameContract.methods
         .getGamesCount()
         .call({ from: account })
-      console.log('Games Count', gamesCountResponse)
 
       setGameId(gamesCountResponse - 1)
 
+      // Get GameState
       const gameResponse = await gameContract.methods
         .games(gamesCountResponse - 1)
         .call({ from: account })
-      console.log('GameResponse', gameResponse)
       if (gameResponse.player1.addr === account) {
-        console.log('I am player 1', gameResponse)
         let gameResponse2
         const interval = setInterval(async () => {
-          console.log('Tick')
           setQueueTime(queueTime + 1)
           gameResponse2 = await gameContract.methods
             .games(gamesCountResponse - 1)
             .call({ from: account })
-          console.log('hello', gameResponse2)
-          console.log('config null address', config.NULL_ADDRESS)
           if (gameResponse2.player2.addr !== config.NULL_ADDRESS) {
             clearInterval(interval)
-            console.log('gameResponse2', gameResponse2)
             setGameState(gameResponse2)
-            console.log('gameResponse2', gameResponse2)
             navigate('/game')
           }
         }, 5000)

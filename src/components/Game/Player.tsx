@@ -7,20 +7,30 @@ import Board from './Board'
 import Hand from './Hand'
 import Deck from '../Deck/Deck'
 import Junk from './Junk'
-import { PlayerType } from '../../types'
+import { CardStack, PlayerType } from '../../types'
 
 interface PlayerProps extends BoxProps {
   player: PlayerType | undefined
+  onPlayCard: (cardId: number) => Promise<void>
+  me: boolean
 }
 
 const Player: React.FC<PlayerProps> = (props) => {
-  const { player, className } = props
-  const [health] = React.useState<number>(Number(player?.health))
-  const [mana] = React.useState(Number(player?.mana || 0))
+  const { player, className, onPlayCard, me } = props
+  const [health, setHealth] = React.useState<number>(0)
+  const [mana, setMana] = React.useState(0)
   const [deck] = React.useState(player?.deck)
-  const [hand] = React.useState(player?.hand)
-  const [board] = React.useState(player?.botZone)
+  const [hand, setHand] = React.useState<CardStack | undefined>(undefined)
+  const [board, setBoard] = React.useState<CardStack | undefined>(undefined)
   const [junk] = React.useState(player?.junk)
+
+  React.useEffect(() => {
+    setHealth(Number(player?.health))
+    setMana(Number(player?.mana || 0))
+    setHand(player?.hand)
+    setBoard(player?.botZone)
+    console.log('Player rerendered', player)
+  }, [player])
 
   return (
     <Box className={className} sx={{ ...playerStyles }}>
@@ -74,10 +84,13 @@ const Player: React.FC<PlayerProps> = (props) => {
           height: '60%',
         }}
       >
-        {board && <Board board={board} />}
+        {board && <Board board={board} me={me} />}
       </Box>
-      <Hand mana={mana} hand={hand} />
-      {/* {(mana && hand) ? <Hand mana={mana} hand={hand} /> : <Box />} */}
+      <Hand
+        mana={mana}
+        hand={hand}
+        onPlayCard={(cardId: number) => onPlayCard(cardId)}
+      />
       <Box sx={{ width: 200, ml: 8 }}>{deck && <Deck cards={deck} />}</Box>
     </Box >
   )

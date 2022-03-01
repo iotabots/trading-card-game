@@ -7,60 +7,84 @@ import ButtonImage from '../../icons/Button.png'
 interface RoundProps {
   round: string
   phaseId: string
+  nextPhase: () => void
+  startFight: () => void
+  endFightPhase: () => void
+  endTurn: () => void
 }
 
 const Round: React.FC<RoundProps> = (props) => {
   const {
     round,
     phaseId,
+    nextPhase,
+    startFight,
+    endFightPhase,
+    endTurn
   } = props
   const myTurn = 'player'
 
-  let phase = {
+  interface Phase {
+    value: string
+    label: string
+    callback: (() => void) | null
+  }
+
+  let phase: Phase = {
     value: '',
-    label: ''
+    label: '',
+    callback: null
   }
 
   switch (phaseId) {
     case '1':
+      console.log('draw')
       phase = {
         value: 'draw',
-        label: 'Draw'
+        label: 'Draw',
+        callback: nextPhase
       }
       break
 
     case '2':
+      console.log('play')
       phase = {
         value: 'play',
-        label: 'Start Fight'
+        label: 'Start Fight',
+        callback: startFight
       }
       break
 
     case '3':
+      console.log('attack')
       phase = {
         value: 'fight',
-        label: 'End Fight'
+        label: 'End Fight',
+        callback: endFightPhase
       }
       break
 
     case '4':
+      console.log('end')
       phase = {
         value: 'play',
-        label: 'End Turn'
+        label: 'End Turn',
+        callback: endTurn
       }
       break
 
     default:
       phase = {
         value: 'connect',
-        label: 'Connecting...'
+        label: 'Connecting...',
+        callback: nextPhase
       }
       break
   }
 
   return (
     <Box
-      onClick={() => console.log('todo')} // onNextPhase
+      onClick={phase.callback as any} // onNextPhase
       sx={{
         position: 'fixed',
         zIndex: 11,

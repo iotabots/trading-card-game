@@ -6,10 +6,11 @@ import { CardStack } from '../../types'
 interface HandProps {
   hand: CardStack | undefined
   mana: number
+  onPlayCard: (cardId: number) => Promise<void>
 }
 
 const Hand: React.FC<HandProps> = (props) => {
-  const { hand, mana } = props
+  const { hand, mana, onPlayCard } = props
   const deck = hand && hand.cards.filter((card: string) => card !== '0')
 
   return (
@@ -42,7 +43,7 @@ const Hand: React.FC<HandProps> = (props) => {
             className='card'
             onClick={
               mana >= 0
-                ? () => console.log('onPlay')
+                ? () => onPlayCard(Number(card))
                 : () => console.log('error')
             }
             key={card}
