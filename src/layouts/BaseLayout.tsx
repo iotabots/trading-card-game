@@ -6,12 +6,12 @@ const BaseLayout: React.FC = ({ children }) => {
   const navigate = useNavigate()
   const MENU = [
     {
-      label: 'Game',
+      label: 'Collection',
       onClick: () => navigate('/'),
     },
     {
-      label: 'Collection',
-      onClick: () => navigate('/collection'),
+      label: 'Game',
+      onClick: () => navigate('/game'),
     },
     {
       label: 'History',

@@ -63,6 +63,7 @@ const Collection: React.FC = () => {
   }
 
   React.useEffect(() => {
+    console.log(!!account && !!library)
     if (!!account && !!library) {
       init()
     }
@@ -84,7 +85,7 @@ const Collection: React.FC = () => {
       const playResponse = await gameContract.methods
         .play(array)
         .send({ from: account })
-      console.log('Play Response', playResponse)
+      // console.log('Play Response', playResponse)
 
       const gamesCountResponse = await gameContract.methods
         .getGamesCount()

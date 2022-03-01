@@ -122,8 +122,6 @@ const Player: React.FC<PlayerProps> = (props) => {
     },
   }
 
-  console.log('player', gameState)
-
   return (
     <Box className={className} sx={{ ...playerStyles }}>
       <Box
