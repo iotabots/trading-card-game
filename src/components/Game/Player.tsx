@@ -10,16 +10,12 @@ import Junk from './Junk'
 import { CardType, PlayerType } from '../../types'
 import { GameContext } from '../../contexts/GameContext'
 
-
 interface PlayerProps extends BoxProps {
   player: PlayerType | undefined
 }
 
 const Player: React.FC<PlayerProps> = (props) => {
-  const {
-    player,
-    className,
-  } = props
+  const { player, className } = props
   const { gameState } = React.useContext(GameContext)
   const [hp, setHp] = React.useState(player?.health)
   const [mp, setMp] = React.useState(player?.mana)
@@ -106,15 +102,15 @@ const Player: React.FC<PlayerProps> = (props) => {
 
         '& .player-info': {
           mb: 4,
-          mt: 0
-        }
+          mt: 0,
+        },
       },
 
       '& .hand': {
         top: 'auto',
         bottom: 0,
         transform: 'translate(-50%, 30%)',
-      }
+      },
     },
 
     '& .hand': {
@@ -126,15 +122,19 @@ const Player: React.FC<PlayerProps> = (props) => {
     },
   }
 
+  console.log('player', gameState)
+
   return (
     <Box className={className} sx={{ ...playerStyles }}>
-      <Box className='player-column'
+      <Box
+        className='player-column'
         sx={{
           height: '100%',
           display: 'flex',
           flexDirection: 'column-reverse',
           mr: 2,
-        }}>
+        }}
+      >
         <Box
           className='player-info'
           sx={{
@@ -145,15 +145,20 @@ const Player: React.FC<PlayerProps> = (props) => {
             p: 4,
             mt: 4,
             bgcolor: '#060A12',
-            borderRadius: '8px'
+            borderRadius: '8px',
           }}
         >
           <Box display='flex' flexDirection='column' alignItems='center'>
             <Avatar
               sx={{ height: 100, width: 100 }}
-              src='https://assets.iotabots.io/compressed/1.png' />
+              src='https://assets.iotabots.io/compressed/1.png'
+            />
             <Typography fontWeight='bold' my={2}>
-              {player?.addr || 'Peter'}
+              {`${player?.addr.substring(0, 5)}...${player?.addr.substring(
+                // eslint-disable-next-line
+                player?.addr.length - 3,
+                player?.addr.length
+              )}`}
             </Typography>
           </Box>
           {hp && <Health hp={hp} />}
@@ -174,10 +179,8 @@ const Player: React.FC<PlayerProps> = (props) => {
         {board && <Board board={board.cards} />}
       </Box>
       {mp && hand && <Hand mp={mp} hand={hand} />}
-      <Box sx={{ width: 200, ml: 8 }}>
-        {deck && <Deck cards={deck} />}
-      </Box>
-    </Box >
+      <Box sx={{ width: 200, ml: 8 }}>{deck && <Deck cards={deck} />}</Box>
+    </Box>
   )
 }
 

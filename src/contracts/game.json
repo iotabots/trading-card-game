@@ -96,6 +96,11 @@
                 "internalType": "uint256[33]",
                 "name": "cards",
                 "type": "uint256[33]"
+              },
+              {
+                "internalType": "uint256",
+                "name": "size",
+                "type": "uint256"
               }
             ],
             "internalType": "struct CardGame.Deck",
@@ -134,6 +139,23 @@
             ],
             "internalType": "struct CardGame.BotZone",
             "name": "botZone",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256[33]",
+                "name": "cards",
+                "type": "uint256[33]"
+              },
+              {
+                "internalType": "uint256",
+                "name": "size",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct CardGame.Junk",
+            "name": "junk",
             "type": "tuple"
           }
         ],
@@ -164,6 +186,11 @@
                 "internalType": "uint256[33]",
                 "name": "cards",
                 "type": "uint256[33]"
+              },
+              {
+                "internalType": "uint256",
+                "name": "size",
+                "type": "uint256"
               }
             ],
             "internalType": "struct CardGame.Deck",
@@ -202,6 +229,23 @@
             ],
             "internalType": "struct CardGame.BotZone",
             "name": "botZone",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256[33]",
+                "name": "cards",
+                "type": "uint256[33]"
+              },
+              {
+                "internalType": "uint256",
+                "name": "size",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct CardGame.Junk",
+            "name": "junk",
             "type": "tuple"
           }
         ],
@@ -286,6 +330,11 @@
                     "internalType": "uint256[33]",
                     "name": "cards",
                     "type": "uint256[33]"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "size",
+                    "type": "uint256"
                   }
                 ],
                 "internalType": "struct CardGame.Deck",
@@ -324,6 +373,23 @@
                 ],
                 "internalType": "struct CardGame.BotZone",
                 "name": "botZone",
+                "type": "tuple"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "uint256[33]",
+                    "name": "cards",
+                    "type": "uint256[33]"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "size",
+                    "type": "uint256"
+                  }
+                ],
+                "internalType": "struct CardGame.Junk",
+                "name": "junk",
                 "type": "tuple"
               }
             ],
@@ -354,6 +420,11 @@
                     "internalType": "uint256[33]",
                     "name": "cards",
                     "type": "uint256[33]"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "size",
+                    "type": "uint256"
                   }
                 ],
                 "internalType": "struct CardGame.Deck",
@@ -392,6 +463,23 @@
                 ],
                 "internalType": "struct CardGame.BotZone",
                 "name": "botZone",
+                "type": "tuple"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "uint256[33]",
+                    "name": "cards",
+                    "type": "uint256[33]"
+                  },
+                  {
+                    "internalType": "uint256",
+                    "name": "size",
+                    "type": "uint256"
+                  }
+                ],
+                "internalType": "struct CardGame.Junk",
+                "name": "junk",
                 "type": "tuple"
               }
             ],

@@ -39,7 +39,7 @@ export const GameContext = React.createContext<GameContextType>(
 )
 
 export const GameProvider: React.FC = ({ children }) => {
-  const { account } = useWeb3React()
+  const { account, library } = useWeb3React()
   const [gameId, setGameId] = React.useState<number | null>(null)
   const [gameState, setGameState] = React.useState<GameState | null>(null)
   const [currentPlayer, setCurrentPlayer] = React.useState<string | null>(null)
@@ -51,10 +51,12 @@ export const GameProvider: React.FC = ({ children }) => {
   }, [gameId, gameState])
 
   React.useEffect(() => {
-    if (account) {
+    if (!!account && !!library) {
       if (account === gameState?.player1.addr) {
+        console.log('setCurrentPlayer:player1')
         setCurrentPlayer('player1')
       } else if (account === gameState?.player2.addr) {
+        console.log('setCurrentPlayer:player2')
         setCurrentPlayer('player2')
       }
     }
@@ -66,12 +68,8 @@ export const GameProvider: React.FC = ({ children }) => {
     setGameId,
     gameState,
     setGameState,
-    currentPlayer
+    currentPlayer,
   }
 
-  return (
-    <GameContext.Provider value={context}>
-      {children}
-    </GameContext.Provider>
-  )
+  return <GameContext.Provider value={context}>{children}</GameContext.Provider>
 }
