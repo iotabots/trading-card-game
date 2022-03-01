@@ -31,21 +31,47 @@ const GamesList: React.FC<GamesListProps> = (props) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      {loadedGames &&
-        loadedGames.map((game: any) => (
-          <Box
-            sx={{
-              mb: 4,
-              display: 'flex',
-              alignItems: 'left',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Typography variant='h6'>GameID: {game.id}</Typography>
-            <Typography variant='body1'>Player1: {game.player1}</Typography>
-            <Typography variant='body1'>Player2: {game.player2}</Typography>
-          </Box>
-        ))}
+      <table>
+        <thead>
+          <td>Game ID</td>
+          <td>Player1</td>
+          <td>Player2</td>
+        </thead>
+        <tbody>
+          {loadedGames &&
+            loadedGames.map((game: any) => (
+              <tr>
+                <td>
+                  <Typography variant='h6'>{game.id}</Typography>
+                </td>
+                <td>
+                  <Typography variant='body1'>
+                    {`${game.player1?.addr.substring(
+                      0,
+                      5
+                    )}...${game.player1?.addr.substring(
+                      // eslint-disable-next-line
+                      game.player1?.addr.length - 3,
+                      game.player1?.addr.length
+                    )}`}
+                  </Typography>
+                </td>
+                <td>
+                  <Typography variant='body1'>
+                    {`${game.player2?.addr.substring(
+                      0,
+                      5
+                    )}...${game.player2?.addr.substring(
+                      // eslint-disable-next-line
+                      game.player2?.addr.length - 3,
+                      game.player2?.addr.length
+                    )}`}
+                  </Typography>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </Box>
   )
 }

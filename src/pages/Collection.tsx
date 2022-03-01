@@ -26,14 +26,15 @@ const Collection: React.FC = () => {
   const navigate = useNavigate()
 
   // C O N T R A C T S
-  const [cardsContract, setCardsContract] =
-    React.useState<Contract | undefined>(undefined)
+  const [cardsContract, setCardsContract] = React.useState<
+    Contract | undefined
+  >(undefined)
 
-  const [queueTime, setQueueTime] =
-    React.useState<number>(0)
+  const [queueTime, setQueueTime] = React.useState<number>(0)
 
-  const [gameContract, setGameContract] =
-    React.useState<Contract | undefined>(undefined)
+  const [gameContract, setGameContract] = React.useState<Contract | undefined>(
+    undefined
+  )
 
   const [deck, setDeck] = React.useState<DeckType>(DECK)
   const [selectedDeck, setSelectedDeck] = React.useState<number | undefined>(
@@ -80,39 +81,41 @@ const Collection: React.FC = () => {
     })
 
     if (gameContract) {
-      const playResponse =
-        await gameContract.methods.play(array).send({ from: account })
+      const playResponse = await gameContract.methods
+        .play(array)
+        .send({ from: account })
       console.log('Play Response', playResponse)
 
-      const gamesCountResponse =
-        await gameContract.methods.getGamesCount().call({ from: account })
+      const gamesCountResponse = await gameContract.methods
+        .getGamesCount()
+        .call({ from: account })
       console.log('Games Count', gamesCountResponse)
 
       setGameId(gamesCountResponse - 1)
 
-      const gameResponse =
-        await gameContract.methods.games(gamesCountResponse - 1)
-          .call({ from: account })
+      const gameResponse = await gameContract.methods
+        .games(gamesCountResponse - 1)
+        .call({ from: account })
       console.log('GameResponse', gameResponse)
       if (gameResponse.player1.addr === account) {
         console.log('I am player 1', gameResponse)
-        const interval = setInterval(
-          async () => {
-            console.log('Tick')
-            setQueueTime(queueTime + 1)
-            const gameResponse2 =
-              await gameContract.methods.games(gamesCountResponse - 1)
-                .call({ from: account })
-            console.log('hello')
-            console.log('config null address', config.NULL_ADDRESS)
-            if (gameResponse2.player2.addr !== config.NULL_ADDRESS) {
-              clearInterval(interval)
-              setGameState(gameResponse2)
-              console.log('gameResponse2', gameResponse2)
-              navigate('/game')
-            }
-          }, 5000
-        )
+        let gameResponse2
+        const interval = setInterval(async () => {
+          console.log('Tick')
+          setQueueTime(queueTime + 1)
+          gameResponse2 = await gameContract.methods
+            .games(gamesCountResponse - 1)
+            .call({ from: account })
+          console.log('hello', gameResponse2)
+          console.log('config null address', config.NULL_ADDRESS)
+          if (gameResponse2.player2.addr !== config.NULL_ADDRESS) {
+            clearInterval(interval)
+            console.log('gameResponse2', gameResponse2)
+            setGameState(gameResponse2)
+            console.log('gameResponse2', gameResponse2)
+            navigate('/game')
+          }
+        }, 5000)
       } else if (gameResponse.player2.addr === account) {
         setGameState(gameResponse)
         navigate('/game')
