@@ -40,7 +40,7 @@ const GamesList: React.FC<GamesListProps> = (props) => {
         <tbody>
           {loadedGames &&
             loadedGames.map((game: any) => (
-              <tr>
+              <tr key={game.id}>
                 <td>
                   <Typography variant='h6'>{game.id}</Typography>
                 </td>

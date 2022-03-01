@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable max-len */
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
@@ -26,7 +27,7 @@ const Deck: React.FC<DeckProps> = (props) => {
         {deck.map((item, index) => (
           <BackCard
             top={`-${index * 2}px`}
-            key={item}
+            key={`${item}-${index}`}
           />
         ))}
       </Box>

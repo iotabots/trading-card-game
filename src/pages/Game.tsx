@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router'
 import Player from '../components/Game/Player'
 
 import Round from '../components/Game/Round'
-import { PHASES } from '../data/phases'
 import { GameContext } from '../contexts/GameContext'
 import { PlayerType } from '../types'
 import { config } from '../contracts/config'
@@ -48,7 +47,6 @@ const Game: React.FC = () => {
   ]
 
   const init = async (): Promise<void> => {
-    console.log('Init', gameId)
     if (gameId === null) {
       const localGameId = localStorage.getItem('gameId')
       if (localGameId === '') {
@@ -91,20 +89,20 @@ const Game: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, gameId, gameState])
 
-  const [round] = React.useState(gameState?.turn || '0')
-
-  const [phase, setPhase] = React.useState(0)
-  console.log(`${gameState} ${gameId}`)
   console.log('Game: opponent', opponent)
   console.log('Game: player', player)
   return (
     <Box>
       <Box sx={{ display: 'none' }}>
-
         <Navigation identity menu={MENU} mobileMenu={MENU} />
       </Box>
       {opponent && <Player className='opponent' player={opponent} />}
-      {gameState && <Round round={round} phaseId={gameState?.phase || ''} />}
+      {gameState && (
+        <Round
+          round={gameState?.turn || '0'}
+          phaseId={gameState?.phase || ''} />
+      )
+      }
       {player && <Player className='me' player={player} />}
     </Box>
   )
