@@ -1,46 +1,31 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Box } from '@mui/material'
 import { CardStack } from '../../types'
+import { FightState } from '../../pages/Game'
 
 interface BoardProps {
   board: CardStack
+  fight: FightState
+  setFight: Dispatch<SetStateAction<FightState>>
   me: boolean
 }
 
-interface AttackState {
-  attackerId: number | null
-  defenderId: number | null
-}
-
 const Board: React.FC<BoardProps> = (props) => {
-  const { board, me } = props
-  // const [attack, setAttack] = React.useState<AttackState>({
-  //   attackerId: null,
-  //   defenderId: null
-  // })
-  // const onAttack =
-  //   (cardId: number): any => {
-  //     if (me && !!cardId) {
-  //       console.log(`It's my card at ${cardId}`)
-  //       const updatedAttacker = {
-  //         attackerId: cardId,
-  //         defenderId: attack?.defenderId
-  //       }
-  //       setAttack(updatedAttacker)
-  //     } else {
-  //       const updatedDefender = {
-  //         attackerId: attack?.attackerId,
-  //         defenderId: cardId,
-  //       }
-  //       setAttack(updatedDefender)
-  //     }
+  const { board, me, fight, setFight } = props
 
-  //     // Game ID
-  //     // Card ID Player
-  //     // Card ID Attacker
-  //   }
-  console.log('Board', board)
-
+  const onAttack = (cardId: number): any => {
+    if (me) {
+      setFight({
+        defender: fight.defender,
+        attacker: cardId
+      })
+    } else {
+      setFight({
+        defender: cardId,
+        attacker: fight.attacker
+      })
+    }
+  }
 
   return (
     <Box
@@ -54,8 +39,7 @@ const Board: React.FC<BoardProps> = (props) => {
           key={`${me ? 'player' : 'opponent'}-board-${index}`}
           className={`${me ? 'player' : 'opponent'}-board-${index}`}
           component='button'
-          // onClick={() => onAttack(parseInt(item, 2))}
-          // onClick={() => console.log('Attack')}
+          onClick={() => onAttack(Number(item))}
           sx={{
             bgcolor: item !== '0'
               ? 'rgba(0,0,0,0.5)'

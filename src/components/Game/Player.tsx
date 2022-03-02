@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Avatar, Box, Typography } from '@iotabots/components'
 import { BoxProps, SxProps } from '@mui/material'
 import Health from './Health'
@@ -8,27 +8,31 @@ import Hand from './Hand'
 import Deck from '../Deck/Deck'
 import Junk from './Junk'
 import { CardStack, PlayerType } from '../../types'
+import { FightState } from '../../pages/Game'
 
 interface PlayerProps extends BoxProps {
+  fight: FightState
+  setFight: Dispatch<SetStateAction<FightState>>
   player: PlayerType | undefined
   onPlayCard: (cardId: number) => Promise<void>
   me: boolean
 }
 
 const Player: React.FC<PlayerProps> = (props) => {
-  const { player, className, onPlayCard, me } = props
+  const { player, className, onPlayCard, me, fight, setFight } = props
   const [health, setHealth] = React.useState<number>(0)
   const [mana, setMana] = React.useState(0)
   const [deck] = React.useState(player?.deck)
   const [hand, setHand] = React.useState<CardStack | undefined>(undefined)
   const [board, setBoard] = React.useState<CardStack | undefined>(undefined)
-  const [junk] = React.useState(player?.junk)
+  const [junk, setJunk] = React.useState<CardStack | undefined>(undefined)
 
   React.useEffect(() => {
     setHealth(Number(player?.health))
     setMana(Number(player?.mana || 0))
     setHand(player?.hand)
     setBoard(player?.botZone)
+    setJunk(player?.junk)
     console.log('Player rerendered', player)
   }, [player])
 
@@ -84,7 +88,14 @@ const Player: React.FC<PlayerProps> = (props) => {
           height: '60%',
         }}
       >
-        {board && <Board board={board} me={me} />}
+        {board && (
+          <Board
+            board={board}
+            me={me}
+            fight={fight}
+            setFight={setFight}
+          />
+        )}
       </Box>
       <Hand
         mana={mana}
