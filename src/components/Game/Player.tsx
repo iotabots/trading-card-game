@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React from 'react'
 import { Avatar, Box, Typography } from '@iotabots/components'
 import { BoxProps, SxProps } from '@mui/material'
 import Health from './Health'
@@ -8,18 +8,16 @@ import Hand from './Hand'
 import Deck from '../Deck/Deck'
 import Junk from './Junk'
 import { CardStack, PlayerType } from '../../types'
-import { FightState } from '../../pages/Game'
+import { GameContext } from '../../contexts/GameContext'
 
 interface PlayerProps extends BoxProps {
-  fight: FightState
-  setFight: Dispatch<SetStateAction<FightState>>
   player: PlayerType | undefined
-  onPlayCard: (cardId: number) => Promise<void>
   me: boolean
 }
 
 const Player: React.FC<PlayerProps> = (props) => {
-  const { player, className, onPlayCard, me, fight, setFight } = props
+  const { player, className, me } = props
+  const { onPlayCard } = React.useContext(GameContext)
   const [health, setHealth] = React.useState<number>(0)
   const [mana, setMana] = React.useState(0)
   const [deck] = React.useState(player?.deck)
@@ -33,7 +31,6 @@ const Player: React.FC<PlayerProps> = (props) => {
     setHand(player?.hand)
     setBoard(player?.botZone)
     setJunk(player?.junk)
-    console.log('Player rerendered', player)
   }, [player])
 
   return (
@@ -92,8 +89,6 @@ const Player: React.FC<PlayerProps> = (props) => {
           <Board
             board={board}
             me={me}
-            fight={fight}
-            setFight={setFight}
           />
         )}
       </Box>

@@ -11,7 +11,16 @@ interface HandProps {
 
 const Hand: React.FC<HandProps> = (props) => {
   const { hand, mana, onPlayCard } = props
-  const deck = hand && hand.cards.filter((card: string) => card !== '0')
+  const [filteredHand, setFilteredHand] =
+    React.useState<string[]>([])
+
+  React.useEffect(() => {
+    let deck: string[] = ['']
+    if (hand) {
+      deck = hand.cards.filter((card: string) => card !== '0')
+    }
+    setFilteredHand(deck)
+  }, [hand])
 
   return (
     <Box
@@ -22,7 +31,7 @@ const Hand: React.FC<HandProps> = (props) => {
       justifyContent='center'
       mb={6}
     >
-      {deck && deck.length > 0 && deck.flatMap((card, index) => {
+      {filteredHand && hand && filteredHand.flatMap((card, index) => {
         let cardAngle
         let translateX = 0
         let translateY = 0
@@ -55,6 +64,7 @@ const Hand: React.FC<HandProps> = (props) => {
               backgroundRepeat: 'no-repeat',
               backgroundColor: 'transparent',
               border: 'none',
+              cursor: 'pointer',
               transition: 'all ease-in-out 200ms',
               transformOrigin: 'bottom center',
               transform:

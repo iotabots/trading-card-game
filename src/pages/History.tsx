@@ -30,7 +30,6 @@ const Collection: React.FC = () => {
     setGameContract(GameContract)
     const promises = []
     const gamesCount: number = await GameContract.methods.getGamesCount().call()
-    console.log('gamesCount', gamesCount)
 
     if (gamesCount > 0) {
       for (let i = 0; i < gamesCount; i += 1) {
@@ -40,7 +39,6 @@ const Collection: React.FC = () => {
       }
     }
     Promise.all(promises).then((results) => {
-      console.log('results', results)
       setGames(results)
     })
   }

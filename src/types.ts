@@ -1,4 +1,3 @@
-// P L A Y E R
 export interface CardStack {
   cards: string[]
   size: string
@@ -22,6 +21,11 @@ export interface GameState {
   state: string
   turn: string
   phase: string
+}
+
+export interface FightState {
+  attacker: number | null
+  defender: number | null
 }
 
 // C A R D S

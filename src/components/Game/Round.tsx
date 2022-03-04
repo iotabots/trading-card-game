@@ -1,34 +1,31 @@
 import React from 'react'
-import { Box, Typography } from '@iotabots/components'
+import { Box, Button, Typography } from '@iotabots/components'
 import Arrow from '../../icons/Arrow'
 import Highlight from '../../icons/Highlight'
 import ButtonImage from '../../icons/Button.png'
+import { GameContext } from '../../contexts/GameContext'
 
 interface RoundProps {
   round: string
   phaseId: string
-  nextPhase: () => void
-  startFight: () => void
-  endFightPhase: () => void
-  endTurn: () => void
+}
+
+interface Phase {
+  value: string
+  label: string
+  callback: (() => void) | null
 }
 
 const Round: React.FC<RoundProps> = (props) => {
+  const { round, phaseId } = props
   const {
-    round,
-    phaseId,
-    nextPhase,
-    startFight,
-    endFightPhase,
-    endTurn
-  } = props
+    onNextPhase,
+    onStartFight,
+    onEndFightPhase,
+    onEndTurn,
+    updateGameState
+  } = React.useContext(GameContext)
   const myTurn = 'player'
-
-  interface Phase {
-    value: string
-    label: string
-    callback: (() => void) | null
-  }
 
   let phase: Phase = {
     value: '',
@@ -38,38 +35,34 @@ const Round: React.FC<RoundProps> = (props) => {
 
   switch (phaseId) {
     case '1':
-      console.log('draw')
       phase = {
         value: 'draw',
         label: 'Draw',
-        callback: nextPhase
+        callback: onNextPhase
       }
       break
 
     case '2':
-      console.log('play')
       phase = {
         value: 'play',
         label: 'Start Fight',
-        callback: startFight
+        callback: onStartFight
       }
       break
 
     case '3':
-      console.log('attack')
       phase = {
         value: 'fight',
         label: 'End Fight',
-        callback: endFightPhase
+        callback: onEndFightPhase
       }
       break
 
     case '4':
-      console.log('end')
       phase = {
         value: 'play',
         label: 'End Turn',
-        callback: endTurn
+        callback: onEndTurn
       }
       break
 
@@ -77,7 +70,7 @@ const Round: React.FC<RoundProps> = (props) => {
       phase = {
         value: 'connect',
         label: 'Connecting...',
-        callback: nextPhase
+        callback: onNextPhase
       }
       break
   }
@@ -171,7 +164,9 @@ const Round: React.FC<RoundProps> = (props) => {
           {phase.label}
         </Typography>
       </Box>
-
+      <Button color='inherit' variant='contained' onClick={updateGameState}>
+        Reload
+      </Button>
     </Box >
   )
 }

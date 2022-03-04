@@ -12,18 +12,14 @@ export interface GamesListProps {
 const GamesList: React.FC<GamesListProps> = (props) => {
   const { account, library } = useWeb3React()
   const { games } = props
-  console.log('games', games)
   const [loadedGames, setLoadedGames] = React.useState<any>([])
 
   const init = async (): Promise<void> => {
-    console.log('games[0]', games[0])
     setLoadedGames(games)
-    console.log('loadedGames', loadedGames)
   }
 
   React.useEffect(() => {
     if (!!account && !!library && !!games) {
-      console.log('games2', games)
       init()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

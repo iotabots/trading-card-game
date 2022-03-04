@@ -1,17 +1,16 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React from 'react'
 import { Box } from '@mui/material'
 import { CardStack } from '../../types'
-import { FightState } from '../../pages/Game'
+import { GameContext } from '../../contexts/GameContext'
 
 interface BoardProps {
   board: CardStack
-  fight: FightState
-  setFight: Dispatch<SetStateAction<FightState>>
   me: boolean
 }
 
 const Board: React.FC<BoardProps> = (props) => {
-  const { board, me, fight, setFight } = props
+  const { board, me } = props
+  const { fight, setFight } = React.useContext(GameContext)
 
   const onAttack = (cardId: number): any => {
     if (me) {
