@@ -21,13 +21,13 @@ jobs:
           node-version: 12.x
 
       - name: Install NPM packages
-        run: npm ci
+        run: yarn
 
       - name: Build project
-        run: npm run build
+        run: yarn build
 
       - name: Run tests
-        run: npm run test
+        run: yarn test
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
