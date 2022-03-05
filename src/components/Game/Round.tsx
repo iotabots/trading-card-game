@@ -1,9 +1,10 @@
 import React from 'react'
-import { Box, Button, Typography } from '@iotabots/components'
+import { Box, Typography } from '@iotabots/components'
 import Arrow from '../../icons/Arrow'
 import Highlight from '../../icons/Highlight'
 import ButtonImage from '../../icons/Button.png'
 import { GameContext } from '../../contexts/GameContext'
+import { transition } from '../../styles'
 
 interface RoundProps {
   round: string
@@ -23,7 +24,7 @@ const Round: React.FC<RoundProps> = (props) => {
     onStartFight,
     onEndFightPhase,
     onEndTurn,
-    updateGameState
+    // updateGameState
   } = React.useContext(GameContext)
   const myTurn = 'player'
 
@@ -77,6 +78,7 @@ const Round: React.FC<RoundProps> = (props) => {
 
   return (
     <Box
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onClick={phase.callback as any} // onNextPhase
       sx={{
         position: 'fixed',
@@ -111,7 +113,7 @@ const Round: React.FC<RoundProps> = (props) => {
             borderRadius: '50%',
             height: 60,
             width: 60,
-            transition: 'all ease-in-out 0.3s',
+            transition,
             bgcolor: myTurn ? 'primary.main' : '#070A10',
             borderStyle: 'solid',
             borderWidth: '4px',
@@ -129,7 +131,7 @@ const Round: React.FC<RoundProps> = (props) => {
                 : 'rotate(180deg)',
               transformOrigin: 'center center',
               position: 'absolute',
-              transition: 'all ease-in-out 0.3s'
+              transition
             }
           }}>
           <Arrow />

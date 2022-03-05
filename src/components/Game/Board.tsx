@@ -2,6 +2,7 @@ import React from 'react'
 import { Box } from '@mui/material'
 import { CardStack } from '../../types'
 import { GameContext } from '../../contexts/GameContext'
+import { transition } from '../../styles'
 
 interface BoardProps {
   board: CardStack
@@ -12,6 +13,7 @@ const Board: React.FC<BoardProps> = (props) => {
   const { board, me } = props
   const { fight, setFight } = React.useContext(GameContext)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onAttack = (cardId: number): any => {
     if (me) {
       setFight({
@@ -54,7 +56,7 @@ const Board: React.FC<BoardProps> = (props) => {
             borderBottom: me ? 'none' : '5px solid',
             borderTop: me ? '5px solid' : 'none',
             borderColor: 'transparent',
-            transition: 'all ease-in-out 200ms',
+            transition,
             '&:hover': {
               borderColor: 'primary.main',
               cursor: 'pointer'

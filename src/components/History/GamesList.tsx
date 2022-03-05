@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import { useWeb3React } from '@web3-react/core'

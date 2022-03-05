@@ -110,6 +110,7 @@ const Collection: React.FC = () => {
         setGameState(gameResponse)
         navigate('/game')
       } else {
+        // eslint-disable-next-line no-console
         console.log('error')
       }
     }

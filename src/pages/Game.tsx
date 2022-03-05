@@ -50,6 +50,11 @@ const Game: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, gameState])
 
+  React.useEffect(() => {
+    updateGameState()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Box>
       <Box sx={{ display: 'none' }}>
@@ -71,12 +76,25 @@ const Game: React.FC = () => {
         sx={{
           position: 'fixed',
           top: '48%',
-          left: 40
+          left: 60,
+          zIndex: 10
         }}
         color='inherit'
         variant='contained'
         onClick={updateGameState}>
         Reload
+      </Button>
+      <Button
+        sx={{
+          position: 'fixed',
+          bottom: 60,
+          left: 60,
+          zIndex: 10,
+        }}
+        color='inherit'
+        variant='contained'
+        onClick={() => navigate('/')}>
+        Game Menu
       </Button>
       {gameState && player &&
         <Player

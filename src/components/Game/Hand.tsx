@@ -2,6 +2,7 @@
 import React from 'react'
 import { Box } from '@mui/material'
 import { CardStack } from '../../types'
+import { transition } from '../../styles'
 
 interface HandProps {
   hand: CardStack | undefined
@@ -53,6 +54,7 @@ const Hand: React.FC<HandProps> = (props) => {
             onClick={
               mana >= 0
                 ? () => onPlayCard(Number(card))
+                // eslint-disable-next-line no-console
                 : () => console.log('error')
             }
             key={card}
@@ -65,7 +67,7 @@ const Hand: React.FC<HandProps> = (props) => {
               backgroundColor: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              transition: 'all ease-in-out 200ms',
+              transition,
               transformOrigin: 'bottom center',
               transform:
                 `

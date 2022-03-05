@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React from 'react'
-import { Box, Container, Grid, Typography } from '@iotabots/components'
+import { Box, Container, Typography } from '@iotabots/components'
 import { useWeb3React } from '@web3-react/core'
 import Web3 from 'web3'
 import { Contract } from 'web3-eth-contract'
@@ -15,11 +15,13 @@ const Collection: React.FC = () => {
   const { account, library } = useWeb3React()
 
   // C O N T R A C T S
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [gameContract, setGameContract] = React.useState<Contract | undefined>(
     undefined
   )
   const [games, setGames] = React.useState<undefined[]>([])
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const init = async (_account: any, _library: any): Promise<void> => {
     const web3 = new Web3(_library.provider)
 

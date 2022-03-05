@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { Dispatch, SetStateAction } from 'react'
 import Web3 from 'web3'
 import { useWeb3React } from '@web3-react/core'
@@ -47,6 +48,7 @@ export const GameProvider: React.FC = ({ children }) => {
 
   React.useEffect(() => {
     updateGameState()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
 
   const getGameId = async (): Promise<void> => {

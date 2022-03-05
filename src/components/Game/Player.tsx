@@ -1,14 +1,14 @@
 import React from 'react'
 import { Avatar, Box, Typography } from '@iotabots/components'
 import { BoxProps, SxProps } from '@mui/material'
-import Health from './Health'
-import Mana from './Mana'
 import Board from './Board'
 import Hand from './Hand'
 import Deck from '../Deck/Deck'
 import Junk from './Junk'
 import { CardStack, PlayerType } from '../../types'
 import { GameContext } from '../../contexts/GameContext'
+import healthImage from '../../icons/Health.png'
+import manaImage from '../../icons/Mana.png'
 
 interface PlayerProps extends BoxProps {
   player: PlayerType | undefined
@@ -58,11 +58,57 @@ const Player: React.FC<PlayerProps> = (props) => {
           }}
         >
           <Box display='flex' flexDirection='column' alignItems='center'>
-            <Avatar
-              sx={{ height: 100, width: 100 }}
-              src='https://assets.iotabots.io/compressed/1.png'
-            />
-            <Typography fontWeight='bold' my={2}>
+            <Box sx={{
+              position: 'relative'
+            }}>
+              <Avatar
+                sx={{ height: 100, width: 100 }}
+                src='https://assets.iotabots.io/compressed/1.png'
+              />
+              <Box sx={{
+                position: 'absolute',
+                bottom: -16,
+                left: -16,
+                zIndex: 10,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundImage: `url(${healthImage})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                height: 50,
+                width: 50,
+              }}>
+                <Typography sx={{
+                  textAlign: 'center',
+                  fontWeight: 900,
+
+                }}>{health}</Typography>
+              </Box>
+              <Box sx={{
+                position: 'absolute',
+                bottom: -16,
+                right: -16,
+                zIndex: 10,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundImage: `url(${manaImage})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                height: 50,
+                width: 50,
+              }}>
+                <Typography sx={{
+                  textAlign: 'center',
+                  fontWeight: 900,
+
+                }}>{mana}</Typography>
+              </Box>
+            </Box>
+            <Typography fontWeight='bold' my={2} mt={5}>
               {`${player?.addr.substring(0, 5)}...${player?.addr.substring(
                 // eslint-disable-next-line
                 player?.addr.length - 3,
@@ -70,8 +116,6 @@ const Player: React.FC<PlayerProps> = (props) => {
               )}`}
             </Typography>
           </Box>
-          {health && <Health health={health} />}
-          {health && <Mana mana={mana} />}
         </Box>
         {junk && <Junk cards={junk} />}
       </Box>
