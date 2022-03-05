@@ -164,9 +164,6 @@ const Round: React.FC<RoundProps> = (props) => {
           {phase.label}
         </Typography>
       </Box>
-      <Button color='inherit' variant='contained' onClick={updateGameState}>
-        Reload
-      </Button>
     </Box >
   )
 }

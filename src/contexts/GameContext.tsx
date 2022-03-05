@@ -38,6 +38,7 @@ export const GameProvider: React.FC = ({ children }) => {
   const [gameContract, setGameContract] = React.useState<Contract | undefined>(
     undefined
   )
+
   const [fight, setFight] =
     React.useState<FightState>({
       attacker: null,
@@ -77,7 +78,6 @@ export const GameProvider: React.FC = ({ children }) => {
     setGameState(gameResponse)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId, account])
-
 
   // DRAW CARD
   const onNextPhase = async (): Promise<void> => {

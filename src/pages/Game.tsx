@@ -67,6 +67,17 @@ const Game: React.FC = () => {
           round={String(Number(gameState?.turn) + 1)}
           phaseId={gameState?.phase || ''} />
       )}
+      <Button
+        sx={{
+          position: 'fixed',
+          top: '48%',
+          left: 40
+        }}
+        color='inherit'
+        variant='contained'
+        onClick={updateGameState}>
+        Reload
+      </Button>
       {gameState && player &&
         <Player
           className='me'
