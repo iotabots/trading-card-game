@@ -1,0 +1,1 @@
+(self.webpackChunktrading_card_game=self.webpackChunktrading_card_game||[]).push([[563],{36563:function(){}}]);
