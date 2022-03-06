@@ -21,7 +21,7 @@ const App: React.FC = () => {
       <Web3ReactProvider getLibrary={getLibrary}>
         <GameProvider>
           <Frame />
-          <Box bgcolor='#172034' minHeight='100vh'>
+          <Box bgcolor='#0d1425' minHeight='100vh'>
             <Routes>
               <Route path='/' element={<Collection />} />
               <Route path='/game' element={<Game />} />

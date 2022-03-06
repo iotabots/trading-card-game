@@ -30,9 +30,11 @@ const GamesList: React.FC<GamesListProps> = (props) => {
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <table>
         <thead>
-          <td>Game ID</td>
-          <td>Player1</td>
-          <td>Player2</td>
+          <tr>
+            <td>Game ID</td>
+            <td>Player1</td>
+            <td>Player2</td>
+          </tr>
         </thead>
         <tbody>
           {loadedGames &&

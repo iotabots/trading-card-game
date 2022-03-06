@@ -1,7 +1,8 @@
 import React from 'react'
-import { Box, Button, Navigation } from '@iotabots/components'
+import { Box, Navigation } from '@iotabots/components'
 import { useWeb3React } from '@web3-react/core'
 import { useNavigate } from 'react-router'
+import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded'
 import Player from '../components/Game/Player'
 import Round from '../components/Game/Round'
 import { GameContext } from '../contexts/GameContext'
@@ -23,20 +24,6 @@ const Game: React.FC = () => {
     React.useState<PlayerType | null>(null)
 
   const navigate = useNavigate()
-  const MENU = [
-    {
-      label: 'Collection',
-      onClick: () => navigate('/'),
-    },
-    {
-      label: 'Game',
-      onClick: () => navigate('/game'),
-    },
-    {
-      label: 'History',
-      onClick: () => navigate('/history'),
-    },
-  ]
 
   React.useEffect(() => {
     if (account && gameState) {
@@ -59,7 +46,7 @@ const Game: React.FC = () => {
   return (
     <Box>
       <Box sx={{ display: 'none' }}>
-        <Navigation identity menu={MENU} mobileMenu={MENU} />
+        <Navigation identity menu={[]} mobileMenu={[]} />
       </Box>
       {opponent &&
         <Player
@@ -70,31 +57,24 @@ const Game: React.FC = () => {
       }
       {gameState && (
         <Round
-          round={String(Number(gameState?.turn) + 1)}
+          turn={(Number(gameState?.turn) + 1)}
           phaseId={gameState?.phase || ''} />
       )}
-      <FancyButton
-        sx={{
-          position: 'fixed',
-          top: '48%',
-          left: 60,
-          zIndex: 10
-        }}
-        onClick={updateGameState}>
-        Reload
-      </FancyButton>
-      <Button
-        sx={{
-          position: 'fixed',
-          bottom: 60,
-          left: 60,
-          zIndex: 10,
-        }}
-        color='inherit'
-        variant='contained'
-        onClick={() => navigate('/')}>
-        Game Menu
-      </Button>
+      <Box sx={{
+        position: 'fixed',
+        bottom: 60,
+        left: 60,
+        zIndex: 10,
+        display: 'flex'
+      }} >
+        <FancyButton mr={2} onClick={() => navigate('/')}>
+          Game Menu
+        </FancyButton>
+        <FancyButton
+          onClick={updateGameState}>
+          <RefreshRoundedIcon />
+        </FancyButton>
+      </Box>
       {gameState && player &&
         <Player
           className='me'
