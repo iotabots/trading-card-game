@@ -1,10 +1,10 @@
 on:
   push:
     branches:
-      - feat/add-game
+      - main
   pull_request:
     branches:
-      - feat/add-game
+      - main
 
 jobs:
   build:
