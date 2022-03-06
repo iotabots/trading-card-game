@@ -1,11 +1,12 @@
 import React from 'react'
-import { ButtonProps, Button as MuiButton } from '@mui/material'
+import { Box } from '@mui/material'
+import { BoxProps } from '@mui/system'
 import buttonCore from '../icons/button-inner.svg'
 
-const Button: React.FC<ButtonProps> = (props) => {
+const Button: React.FC<BoxProps> = (props) => {
   const { sx } = props
   return (
-    <MuiButton {...props}> sx={{
+    <Box {...props}> sx={{
       background: 'transparent !important',
       border: 'none',
       height: 38,
@@ -13,7 +14,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       ...sx,
     }}
       Button
-    </MuiButton>
+    </Box>
   )
 }
 

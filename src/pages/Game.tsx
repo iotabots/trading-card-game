@@ -6,6 +6,7 @@ import Player from '../components/Game/Player'
 import Round from '../components/Game/Round'
 import { GameContext } from '../contexts/GameContext'
 import { PlayerType } from '../types'
+import FancyButton from '../components/Button'
 
 const Game: React.FC = () => {
   const { account } = useWeb3React()
@@ -72,18 +73,16 @@ const Game: React.FC = () => {
           round={String(Number(gameState?.turn) + 1)}
           phaseId={gameState?.phase || ''} />
       )}
-      <Button
+      <FancyButton
         sx={{
           position: 'fixed',
           top: '48%',
           left: 60,
           zIndex: 10
         }}
-        color='inherit'
-        variant='contained'
         onClick={updateGameState}>
         Reload
-      </Button>
+      </FancyButton>
       <Button
         sx={{
           position: 'fixed',
