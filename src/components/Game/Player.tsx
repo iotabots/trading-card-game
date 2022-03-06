@@ -191,6 +191,7 @@ const playerStyles: SxProps = {
   '& .hand': {
     position: 'absolute',
     top: 0,
+    zIndex: 100,
     bottom: 'auto',
     left: '50%',
     transform: 'translate(-50%, -30%) rotate(180deg)',
