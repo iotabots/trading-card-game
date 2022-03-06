@@ -24,6 +24,7 @@ export interface GameContextType {
   onPlayCard: (cardId: number) => Promise<void>
   fight: FightState
   setFight: Dispatch<SetStateAction<FightState>>
+  myTurn: boolean
 }
 
 export const GameContext = React.createContext<GameContextType>(
@@ -39,6 +40,7 @@ export const GameProvider: React.FC = ({ children }) => {
   const [gameContract, setGameContract] = React.useState<Contract | undefined>(
     undefined
   )
+  const [myTurn, setMyTurn] = React.useState<boolean>(false)
 
   const [fight, setFight] =
     React.useState<FightState>({
@@ -50,6 +52,27 @@ export const GameProvider: React.FC = ({ children }) => {
     updateGameState()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
+
+  React.useEffect(() => {
+    if (gameState?.player1.addr === account) {
+      // console.log('I am player 1')
+      if (Number(gameState?.turn) % 2 !== 0) {
+        // console.log('>>> Its my turn!')
+        setMyTurn(true)
+      } else {
+        setMyTurn(false)
+      }
+    } else if (gameState?.player2.addr === account) {
+      // console.log('I am player 2')
+      if (Number(gameState?.turn) % 2 === 0) {
+        // console.log('>>> Its my turn!')
+        setMyTurn(true)
+      } else {
+        setMyTurn(false)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState])
 
   const getGameId = async (): Promise<void> => {
     const gamesCountResponse = await gameContract?.methods
@@ -156,7 +179,8 @@ export const GameProvider: React.FC = ({ children }) => {
     onEndTurn,
     onPlayCard,
     fight,
-    setFight
+    setFight,
+    myTurn
   }
 
   return (

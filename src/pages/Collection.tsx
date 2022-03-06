@@ -93,6 +93,7 @@ const Collection: React.FC = () => {
       const gameResponse = await gameContract.methods
         .games(gamesCountResponse - 1)
         .call({ from: account })
+
       if (gameResponse.player1.addr === account) {
         let gameResponse2
         const interval = setInterval(async () => {
@@ -134,7 +135,11 @@ const Collection: React.FC = () => {
           <Grid item xs={8} container spacing={6}>
             {collection.flatMap((item) => {
               if (item) {
-                return <CollectionItem item={item} />
+                return (
+                  <CollectionItem
+                    key={item}
+                    item={item} />
+                )
               }
               return <Box />
             })}

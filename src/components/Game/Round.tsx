@@ -2,12 +2,14 @@ import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import Arrow from '../../icons/Arrow'
 import Highlight from '../../icons/Highlight'
-import ButtonImage from '../../icons/Button.png'
 import { GameContext } from '../../contexts/GameContext'
 import { transition } from '../../styles'
+import Button from '../Button'
+import Deploy from '../../icons/Deploy'
+import Fight from '../../icons/Fight'
 
 interface RoundProps {
-  round: string
+  turn: number
   phaseId: string
 }
 
@@ -18,21 +20,24 @@ interface Phase {
 }
 
 const Round: React.FC<RoundProps> = (props) => {
-  const { round, phaseId } = props
+  const { turn, phaseId } = props
   const {
     onNextPhase,
     onStartFight,
     onEndFightPhase,
     onEndTurn,
+    myTurn
     // updateGameState
   } = React.useContext(GameContext)
-  const myTurn = 'player'
 
   let phase: Phase = {
     value: '',
     label: '',
     callback: null
   }
+
+  const round = Math.ceil(turn / 2)
+  // const round = turn
 
   switch (phaseId) {
     case '1':
@@ -78,94 +83,136 @@ const Round: React.FC<RoundProps> = (props) => {
 
   return (
     <Box
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onClick={phase.callback as any} // onNextPhase
       sx={{
         position: 'fixed',
         zIndex: 11,
         top: '50%',
-        right: 40,
+        left: 40,
         pl: 4,
+        width: 'calc(100% - 120px)',
         display: 'flex',
         transform: 'translateY(-50%)',
-        flexDirection: 'row-reverse',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
         '&:hover': {
           cursor: 'pointer'
         }
       }}
     >
-      <Box
-        display='flex'
-        alignItems='center'
-        justifyContent='center'
-        position='relative'
-        zIndex={2}
-        sx={{
-          height: 84,
-          width: 84,
-        }}
-      >
-        <Box display='flex'
-          alignItems='center'
-          justifyContent='center'
+      <Box sx={{
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        <Box
           sx={{
-            borderRadius: '50%',
-            height: 60,
-            width: 60,
-            transition,
-            bgcolor: myTurn ? 'primary.main' : '#070A10',
-            borderStyle: 'solid',
-            borderWidth: '4px',
-            borderColor: myTurn ? 'rgba(0,0,0,0.5)' : 'background.paper',
-          }}>
-          <Typography variant='h5'>{round}</Typography>
-        </Box>
-        <Box position='absolute'
-          top={0}
-          left={0}
-          sx={{
-            '& svg': {
-              transform: myTurn
-                ? 'rotate(0deg)'
-                : 'rotate(180deg)',
-              transformOrigin: 'center center',
-              position: 'absolute',
-              transition
-            }
-          }}>
-          <Arrow />
-          <Box sx={{
-            opacity: myTurn ? '1' : '0.25'
-          }}>
-            <Highlight />
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            zIndex: 2,
+            height: 84,
+            width: 84,
+          }}
+        >
+          <Box display='flex'
+            alignItems='center'
+            justifyContent='center'
+            sx={{
+              borderRadius: '50%',
+              height: 60,
+              width: 60,
+              transition,
+              bgcolor: myTurn ? 'primary.main' : '#1D2945',
+              borderStyle: 'solid',
+              borderWidth: '3px',
+              borderColor: 'rgba(0,0,0,0.5)',
+              boxShadow: '0 0 0 2px #A0A7C1'
+            }}>
+            <Typography variant='h5'>{`${String(round)}`}</Typography>
+          </Box>
+          <Box position='absolute'
+            top={0}
+            left={0}
+            sx={{
+              '& svg': {
+                transform: myTurn
+                  ? 'rotate(0deg) scale(1.1)'
+                  : 'rotate(180deg) scale(1.1)',
+                transformOrigin: 'center center',
+                position: 'absolute',
+                transition
+              }
+            }}>
+            <Arrow />
+            <Box sx={{
+              opacity: myTurn ? '1' : '1'
+            }}>
+              <Highlight />
+            </Box>
           </Box>
         </Box>
-      </Box>
-      <Box
-        sx={{
-          position: 'relative',
-          zIndex: 1,
-          boxSizing: 'border-box',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: 250,
-          height: 65,
-          mt: 4,
-          backgroundImage: `url(${ButtonImage})`,
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-        }}
-      >
-        <Typography variant='h6'
-          fontWeight='bold'
-          sx={{
-            mb: '20px',
+        <Button sx={{ ml: -7 }}>
+          <Box sx={{
+            width: 100,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            ml: 3,
+            '& svg': {
+              color: 'text.secondary',
+              opacity: 0.33
+            },
+            '& .active': {
+              '& svg': {
+                opacity: 1,
+                color: 'common.white'
+              }
+            }
           }}>
-          {phase.label}
-        </Typography>
+            <Box
+              className={`${phase.label === 'Start Fight' && 'active'}`}
+              sx={{ display: 'flex', alignItems: 'center' }}
+            >
+              <Deploy />
+            </Box>
+            <Box
+              className={`${phase.label === 'End Fight' && 'active'}`}
+              sx={{ display: 'flex', alignItems: 'center' }}
+            >
+              <Fight />
+            </Box>
+            <Box
+              className={`${phase.label === 'End Turn' && 'active'}`}
+              sx={{ display: 'flex', alignItems: 'center' }}
+            >
+              <Deploy />
+            </Box>
+          </Box>
+        </Button>
       </Box>
+      <Box sx={{
+        flexGrow: 1,
+        bgcolor: '#060A12',
+        height: 6,
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        <Box sx={{
+          width: '50%',
+          bgcolor: 'white',
+          height: 2,
+          borderRadius: 4
+        }} />
+      </Box>
+      {myTurn && (
+        <Button
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onClick={phase.callback as any} // onNextPhase
+        >
+          {phase.label}
+        </Button>
+      )}
     </Box >
   )
 }
