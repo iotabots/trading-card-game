@@ -36,8 +36,8 @@ const Hand: React.FC<HandProps> = (props) => {
         let cardAngle
         let translateX = 0
         let translateY = 0
-        const angle = 15
-        const length = parseInt(hand.size, 2)
+        const length = Number(hand.size)
+        const angle = 5 + (length * 0.1)
         const sideElements = Math.floor(length / 2)
         const increment = angle / sideElements
         translateX = increment * (sideElements - index)
