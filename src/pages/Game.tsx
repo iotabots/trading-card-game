@@ -62,9 +62,9 @@ const Game: React.FC = () => {
       )}
       <Box sx={{
         position: 'fixed',
+        zIndex: 1000,
         bottom: 60,
         left: 60,
-        zIndex: 10,
         display: 'flex'
       }} >
         <FancyButton mr={2} onClick={() => navigate('/')}>
