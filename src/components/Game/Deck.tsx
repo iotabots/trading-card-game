@@ -1,9 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable max-len */
 import React from 'react'
-import { Box, Typography } from '@iotabots/components'
-import BackCard from '../Game/BackCard'
+import { Box } from '@iotabots/components'
+import BackCard from './BackCard'
 import { CardStack } from '../../types'
+import Button from '../Button'
 
 interface DeckProps {
   cards: CardStack
@@ -11,7 +12,6 @@ interface DeckProps {
 
 const Deck: React.FC<DeckProps> = (props) => {
   const { cards } = props
-
   const deck = cards.cards.filter((card: string) => card !== '0')
 
   return (
@@ -32,22 +32,13 @@ const Deck: React.FC<DeckProps> = (props) => {
         ))}
       </Box>
       <Box display='flex'>
-        <Typography
-          mr={2}
-          fontWeight='bold'
-          fontSize={12}
-          color='text.disabled'
-          textTransform='uppercase'
-        >
-          Deck:
-        </Typography>
-        <Typography
-          fontWeight='bold'
-          fontSize={12}
-          textTransform='uppercase'
-        >
-          {deck.length}
-        </Typography>
+        <Button sx={{
+          transform:
+            'rotateX(49deg) rotateZ(-32deg) translateX(126px) translateY(-8px)',
+          transformStyle: 'preserve-3d',
+        }}>
+          {cards.size}
+        </Button>
       </Box>
     </Box>
   )
