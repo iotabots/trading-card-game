@@ -26,22 +26,21 @@ const Collection: React.FC = () => {
   const navigate = useNavigate()
 
   // C O N T R A C T S
-  const [cardsContract, setCardsContract] =
-    React.useState<Contract | undefined>(undefined)
+  const [cardsContract, setCardsContract] = React.useState<
+    Contract | undefined
+  >(undefined)
 
-  const [queueTime, setQueueTime] =
-    React.useState<number>(0)
+  const [queueTime, setQueueTime] = React.useState<number>(0)
 
-  const [gameContract, setGameContract] =
-    React.useState<Contract | undefined>(undefined)
+  const [gameContract, setGameContract] = React.useState<Contract | undefined>(
+    undefined
+  )
 
   const [deck, setDeck] = React.useState<DeckType>(DECK)
   const [selectedDeck, setSelectedDeck] = React.useState<number | undefined>(
     undefined
   )
   const [collection, setCollection] = React.useState<undefined[]>([])
-
-  console.log('collection', collection)
 
   const init = async (): Promise<void> => {
     const web3 = new Web3(library.provider)
@@ -71,10 +70,7 @@ const Collection: React.FC = () => {
   }, [account, library])
 
   const onPlay = async (): Promise<void> => {
-    // Timeout
-
     const array: string[] = []
-
     deck.cards.map((item): void => {
       for (let index = 0; index < item.count; index += 1) {
         array.push(item.id)
@@ -82,40 +78,41 @@ const Collection: React.FC = () => {
     })
 
     if (gameContract) {
-      const playResponse =
-        await gameContract.methods.play(array).send({ from: account })
-      console.log('Play Response', playResponse)
+      // Join Queue
+      await gameContract.methods
+        .play(array)
+        .send({ from: account })
 
-      const gamesCountResponse =
-        await gameContract.methods.getGamesCount().call({ from: account })
-      console.log('Games Count', gamesCountResponse)
-
+      // Get GameId
+      const gamesCountResponse = await gameContract.methods
+        .getGamesCount()
+        .call({ from: account })
       setGameId(gamesCountResponse - 1)
 
-      const gameResponse =
-        await gameContract.methods.games(gamesCountResponse - 1)
-          .call({ from: account })
+      // Get GameState
+      const gameResponse = await gameContract.methods
+        .games(gamesCountResponse - 1)
+        .call({ from: account })
 
       if (gameResponse.player1.addr === account) {
-        console.log('I am player 1', gameResponse)
-        const interval = setInterval(
-          async () => {
-            console.log('Tick')
-            setQueueTime(queueTime + 1)
-            const gameResponse2 =
-              await gameContract.methods.games(gamesCountResponse - 1)
-                .call({ from: account })
-
-            if (gameResponse2.player2.addr !== config.NULL_ADDRESS) {
-              clearInterval(interval)
-              setGameState(gameResponse2)
-              navigate('/game')
-            }
-          }, 5000
-        )
+        let gameResponse2
+        const interval = setInterval(async () => {
+          setQueueTime(queueTime + 1)
+          gameResponse2 = await gameContract.methods
+            .games(gamesCountResponse - 1)
+            .call({ from: account })
+          if (gameResponse2.player2.addr !== config.NULL_ADDRESS) {
+            clearInterval(interval)
+            setGameState(gameResponse2)
+            navigate('/game')
+          }
+        }, 5000)
       } else if (gameResponse.player2.addr === account) {
         setGameState(gameResponse)
         navigate('/game')
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('error')
       }
     }
   }
@@ -138,7 +135,11 @@ const Collection: React.FC = () => {
           <Grid item xs={8} container spacing={6}>
             {collection.flatMap((item) => {
               if (item) {
-                return <CollectionItem item={item} />
+                return (
+                  <CollectionItem
+                    key={item}
+                    item={item} />
+                )
               }
               return <Box />
             })}

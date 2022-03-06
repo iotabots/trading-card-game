@@ -1,19 +1,19 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable max-len */
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import BackCard from '../Game/BackCard'
+import { CardStack } from '../../types'
 
 interface DeckProps {
-  cards: number
+  cards: CardStack
 }
 
 const Deck: React.FC<DeckProps> = (props) => {
   const { cards } = props
-  const deck = []
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < cards; i++) {
-    deck.push(i)
-  }
+
+  const deck = cards.cards.filter((card: string) => card !== '0')
+
   return (
     <Box sx={{
       width: 142,
@@ -27,8 +27,7 @@ const Deck: React.FC<DeckProps> = (props) => {
         {deck.map((item, index) => (
           <BackCard
             top={`-${index * 2}px`}
-            key={item}
-          // className={index === deck.length - 1 ? 'active' : ''}
+            key={`${item}-${index}`}
           />
         ))}
       </Box>
@@ -47,7 +46,7 @@ const Deck: React.FC<DeckProps> = (props) => {
           fontSize={12}
           textTransform='uppercase'
         >
-          {cards}
+          {deck.length}
         </Typography>
       </Box>
     </Box>

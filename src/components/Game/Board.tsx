@@ -1,25 +1,50 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { CardType } from '../../types'
+import { CardStack } from '../../types'
+import { GameContext } from '../../contexts/GameContext'
+import { transition } from '../../styles'
 
 interface BoardProps {
-  board: CardType[]
+  board: CardStack
+  me: boolean
 }
 
 const Board: React.FC<BoardProps> = (props) => {
-  const { board } = props
+  const { board, me } = props
+  const { fight, setFight } = React.useContext(GameContext)
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onAttack = (cardId: number): any => {
+    if (me) {
+      setFight({
+        defender: fight.defender,
+        attacker: cardId
+      })
+    } else {
+      setFight({
+        defender: cardId,
+        attacker: fight.attacker
+      })
+    }
+  }
+
   return (
     <Box
       className='board'
       display='flex'
       width='100%'
     >
-      {[0, 1, 2, 3, 4].map((item) => (
+      {board.cards.map((item, index) => (
         <Box
-          key={item}
+          // eslint-disable-next-line react/no-array-index-key
+          key={`${me ? 'player' : 'opponent'}-board-${index}`}
+          className={`${me ? 'player' : 'opponent'}-board-${index}`}
           component='button'
+          onClick={() => onAttack(Number(item))}
           sx={{
-            bgcolor: board[item] ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.25)',
+            bgcolor: item !== '0'
+              ? 'rgba(0,0,0,0.5)'
+              : 'rgba(0,0,0,0.25)',
             borderRadius: '8px',
             border: 'none',
             height: 240,
@@ -27,19 +52,26 @@ const Board: React.FC<BoardProps> = (props) => {
             mx: 2,
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            borderBottom: me ? 'none' : '5px solid',
+            borderTop: me ? '5px solid' : 'none',
+            borderColor: 'transparent',
+            transition,
+            '&:hover': {
+              borderColor: 'primary.main',
+              cursor: 'pointer'
+            }
           }}>
-          {board[item] && (
-            <Box
-              sx={{
-                backgroundImage: `url(${board[item].image})`,
-                height: '90%',
-                width: '100%',
-                backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-              }} />
-          )}
+          <Box
+            sx={{
+              backgroundImage:
+                `url('https://assets.iotabots.io/tcg/${item}.png')`,
+              height: '90%',
+              width: '100%',
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+            }} />
 
         </Box>
       ))}

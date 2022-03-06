@@ -11,9 +11,9 @@ interface DeckBoxProps extends DeckType {
 
 const DeckBox: React.FC<DeckBoxProps> = (props) => {
   const { name, id, setSelectedDeck, cards } = props
+
   const onClick = (): void => {
     setSelectedDeck(id)
-    console.log(id)
   }
 
   let count = 0

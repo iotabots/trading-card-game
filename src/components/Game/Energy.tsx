@@ -65,7 +65,7 @@ const Energy: React.FC<EnergyProps> = (props) => {
                 bgcolor: box <= value
                   ? `${color}.main`
                   : 'rgba(0,0,0,0.66)',
-                '&:first-child': {
+                '&:first-of-type': {
                   borderTopLeftRadius: '6px',
                   borderBottomLeftRadius: '6px'
                 },

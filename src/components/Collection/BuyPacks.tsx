@@ -17,8 +17,7 @@ const BuyPacks: React.FC<BuyPacksProps> = (props) => {
     // @ts-ignore
     if (contract.methods) {
       // @ts-ignore
-      const data =
-        await contract.methods.buy_starter().send({ from: account })
+      await contract.methods.buy_starter().send({ from: account })
     }
   }
 
@@ -26,8 +25,7 @@ const BuyPacks: React.FC<BuyPacksProps> = (props) => {
     // @ts-ignore
     if (contract.methods) {
       // @ts-ignore
-      const data = await contract.methods.buy_booster().send({ from: account })
-      console.log('data', data)
+      await contract.methods.buy_booster().send({ from: account })
     }
   }
 

@@ -1,5 +1,15 @@
 export const CARDS = [
   {
+    id: '0',
+    type: 'bot',
+    name: 'Ball Bot',
+    image: 'https://assets.iotabots.io/tcg/1.png',
+    mana: 1,
+    attack: 1,
+    defense: 1,
+    hits: 1,
+  },
+  {
     id: '1',
     type: 'bot',
     name: 'Ball Bot',

@@ -1,7 +1,8 @@
 /* eslint-disable max-len */
+import React from 'react'
 import { Box } from '@iotabots/components'
 import { BoxProps } from '@mui/material'
-import React from 'react'
+import { transition } from '../../styles'
 
 const BackCard: React.FC<BoxProps> = (props) => (
   <Box
@@ -18,7 +19,7 @@ const BackCard: React.FC<BoxProps> = (props) => (
       transformStyle: 'preserve-3d',
       borderRadius: '8px',
       boxShadow: '1px 1px 0 1px #f9f9fb, -1px 0 8px 0 rgba(34, 33, 81, 0.01), 8px 8px 8px 0 rgba(34, 33, 81, 0.25)',
-      transition: '0.4s ease-in-out all, 0.4s ease-in-out box-shadow',
+      transition,
       '&.active:hover': {
         transform: 'translate3d(4px, 0px, 0px)',
       }

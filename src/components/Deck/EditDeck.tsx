@@ -86,8 +86,10 @@ const EditDeck: React.FC<EditDeckProps> = (props) => {
         overflowY: 'auto',
         flexGrow: 1,
       }}>
-        {cards.map((card) => (
+        {cards.map((card, index) => (
           <DeckItem
+            // eslint-disable-next-line react/no-array-index-key
+            key={`${card.id}-${index}`}
             id={card.id}
             mana={card.mana}
             name={card.name}

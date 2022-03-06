@@ -1,52 +1,87 @@
 import React from 'react'
-import { Box } from '@iotabots/components'
+import { Box, Navigation } from '@iotabots/components'
+import { useWeb3React } from '@web3-react/core'
+import { useNavigate } from 'react-router'
+import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded'
 import Player from '../components/Game/Player'
-
-import { OPPONENT, PLAYER } from '../data/players'
 import Round from '../components/Game/Round'
-import { PHASES } from '../data/phases'
+import { GameContext } from '../contexts/GameContext'
+import { PlayerType } from '../types'
+import FancyButton from '../components/Button'
 
 const Game: React.FC = () => {
-  const [players, setPlayers] = React.useState({
-    player: PLAYER,
-    opponent: OPPONENT
-  })
-  const [round, setRound] = React.useState(1)
-  const [currentPlayer, setCurrentPlayer] = React.useState<string>('player')
+  const { account } = useWeb3React()
 
-  const [phase, setPhase] = React.useState(0)
+  const {
+    gameState,
+    updateGameState,
+  } = React.useContext(GameContext)
+
+  const [player, setPlayer] =
+    React.useState<PlayerType | null>(null)
+
+  const [opponent, setOpponent] =
+    React.useState<PlayerType | null>(null)
+
+  const navigate = useNavigate()
+
+  React.useEffect(() => {
+    if (account && gameState) {
+      if (account === gameState?.player1.addr) {
+        setPlayer(gameState?.player1)
+        setOpponent(gameState?.player2)
+      } else if (account === gameState?.player2.addr) {
+        setPlayer(gameState?.player2)
+        setOpponent(gameState?.player1)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, gameState])
+
+  React.useEffect(() => {
+    updateGameState()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Box>
-      <Player
-        className='opponent'
-        player={players.opponent}
-        onTurn={currentPlayer === players.opponent.type}
-        phase={PHASES[phase]}
-        setPhase={setPhase}
-        setCurrentPlayer={setCurrentPlayer}
-        round={round}
-        setRound={setRound}
-      />
-      <Round
-        setRound={setRound}
-        number={round}
-        title={PHASES[phase].label}
-        currentPlayer={currentPlayer}
-        setCurrentPlayer={setCurrentPlayer}
-        setPhase={setPhase}
-        phase={phase}
-      />
-      <Player
-        className='me'
-        player={players.player}
-        onTurn={currentPlayer === players.player.type}
-        phase={PHASES[phase]}
-        setPhase={setPhase}
-        setCurrentPlayer={setCurrentPlayer}
-        round={round}
-        setRound={setRound}
-      />
+      <Box sx={{ display: 'none' }}>
+        <Navigation identity menu={[]} mobileMenu={[]} />
+      </Box>
+      {opponent &&
+        <Player
+          className='opponent'
+          me={false}
+          player={opponent}
+        />
+      }
+      {gameState && (
+        <Round
+          turn={(Number(gameState?.turn) + 1)}
+          phaseId={gameState?.phase || ''} />
+      )}
+      <Box sx={{
+        position: 'fixed',
+        bottom: 60,
+        left: 60,
+        zIndex: 10,
+        display: 'flex'
+      }} >
+        <FancyButton mr={2} onClick={() => navigate('/')}>
+          Game Menu
+        </FancyButton>
+        <FancyButton
+          onClick={updateGameState}>
+          <RefreshRoundedIcon />
+        </FancyButton>
+      </Box>
+      {gameState && player &&
+        <Player
+          className='me'
+          me
+          player={player}
+        />
+      }
     </Box>
   )
 }
