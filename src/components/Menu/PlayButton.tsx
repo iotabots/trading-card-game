@@ -9,6 +9,7 @@ import { GameContext } from '../../contexts/GameContext'
 import { DECK } from '../../data/deck'
 import PlaySvg from '../../icons/PlaySvg'
 import config from '../../contracts/config'
+import { DecksContext } from '../../contexts/DecksContext'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const GAME_ABI = require('../../contracts/game.json')
@@ -16,12 +17,15 @@ const GAME_ABI = require('../../contracts/game.json')
 const PlayButton: React.FC = () => {
   const { setGameId, setGameState } =
     React.useContext(GameContext)
+  const { decks, selected } =
+    React.useContext(DecksContext)
   const [queueTime, setQueueTime] = React.useState<number>(0)
   const navigate = useNavigate()
   const { account, library } = useWeb3React()
-  const [gameContract, setGameContract] = React.useState<Contract | undefined>(
-    undefined
-  )
+  const [gameContract, setGameContract] =
+    React.useState<Contract | undefined>(
+      undefined
+    )
 
   const init = async (): Promise<void> => {
     const web3 = new Web3(library.provider)
@@ -31,18 +35,18 @@ const PlayButton: React.FC = () => {
     )
     setGameContract(GameContract)
   }
-  const onPlay = async (): Promise<void> => {
 
+  const onPlay = async (): Promise<void> => {
+    console.log('Selected Deck', decks[selected])
     console.log('onPlay', gameContract)
     const array: string[] = []
-    DECK.cards.map((item): void => {
+    decks[selected].cards.map((item): void => {
       for (let index = 0; index < item.count; index += 1) {
         array.push(String(Number(item.id) + 1))
       }
     })
-    console.log(DECK.cards)
-    console.log('array')
-    console.log(array)
+    console.log('Unique Cards in Deck', DECK.cards)
+    console.log('Array send to Contract', array)
 
     if (gameContract) {
       console.log('gameContract true')
@@ -91,11 +95,12 @@ const PlayButton: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, library])
+
   return (
     <Box
       sx={{
         position: 'relative',
-        cursor: 'pointer'
+        cursor: 'pointer',
       }}
       onClick={onPlay}
     >

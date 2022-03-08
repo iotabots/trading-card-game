@@ -4,10 +4,12 @@ import AvatarFrame from '../../icons/AvatarFrame'
 import Badge from './Badge'
 
 interface AvatarProps {
-  avatar: string
+  avatar: string,
+  // eslint-disable-next-line react/require-default-props
+  level?: number | null
 }
 
-const Avatar: React.FC<AvatarProps> = ({ avatar }) => (
+const Avatar: React.FC<AvatarProps> = ({ avatar, level }) => (
   <Box sx={{
     position: 'relative',
     height: 136,
@@ -29,15 +31,17 @@ const Avatar: React.FC<AvatarProps> = ({ avatar }) => (
     }}>
       <AvatarFrame />
     </Box>
-    <Box sx={{
-      position: 'absolute',
-      zIndex: 3,
-      left: '50%',
-      transform: 'translateX(-50%)',
-      bottom: -8
-    }}>
-      <Badge>4</Badge>
-    </Box>
+    {level && (
+      <Box sx={{
+        position: 'absolute',
+        zIndex: 3,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        bottom: -8
+      }}>
+        <Badge>4</Badge>
+      </Box>
+    )}
   </Box>
 )
 

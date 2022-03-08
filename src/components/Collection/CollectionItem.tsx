@@ -3,6 +3,7 @@ import React from 'react'
 import { Box, Grid, Typography } from '@iotabots/components'
 import { BoxProps } from '@mui/material'
 import Card from './Card'
+import Badge from '../Menu/Badge'
 
 interface CollectionItemProps extends BoxProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,17 +22,9 @@ const CollectionItem: React.FC<CollectionItemProps> = (props) => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          mt: 2
+          mt: -5
         }}>
-        <Box sx={{
-          bgcolor: 'rgba(0,0,0,0.5)',
-          borderRadius: '4px',
-          p: 1,
-          px: 2,
-        }}
-        >
-          <Typography fontWeight='bold'>{item[1]}</Typography>
-        </Box>
+        <Badge>{item[1]}</Badge>
       </Box>
     </Grid>
   )

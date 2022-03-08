@@ -1,3 +1,4 @@
+
 import { Web3Provider } from '@ethersproject/providers'
 import { Box, Logo } from '@iotabots/components'
 import { useWeb3React } from '@web3-react/core'
@@ -15,8 +16,8 @@ const Header: React.FC = () => {
   const { account, library } = useWeb3React<Web3Provider>()
   const [bots, setBots] = React.useState<number[]>([])
 
-  const load = async (): Promise<boolean> => {
-    console.log('account', account)
+  const load = React.useCallback(async (): Promise<boolean> => {
+    console.log('Header Account', account)
     const URL =
       'https://raw.githubusercontent.com/iotabots/save-the-bots/main/all.txt'
 
@@ -48,7 +49,7 @@ const Header: React.FC = () => {
     })
     setBots(iotabots)
     return true
-  }
+  }, [account])
 
   React.useEffect(() => {
     if (!!account && !!library) {
@@ -60,6 +61,7 @@ const Header: React.FC = () => {
   return (
     <Box sx={{
       position: 'fixed',
+      zIndex: 10,
       top: 0,
       left: 0,
       height: 80,

@@ -1,6 +1,7 @@
 import { Box, Typography } from '@iotabots/components'
 import React from 'react'
 import Progress from '../../icons/Progress'
+import { colors } from '../../styles'
 import { shortenAddress } from '../../utils/shortenAddress'
 import Avatar from './Avatar'
 
@@ -15,7 +16,9 @@ const PlayerInfo: React.FC<PlayerInfoProps> = ({ avatar, name }) => (
   }}>
     <Avatar avatar={avatar} />
     <Box mt={3}>
-      <Typography ml={4} mb={2} variant='h5'>{shortenAddress(name)}</Typography>
+      <Typography ml={4} mb={2} variant='h5' color={colors.goldLight}>
+        {shortenAddress(name)}
+      </Typography>
       <Progress progress={0.66} />
     </Box>
   </Box>

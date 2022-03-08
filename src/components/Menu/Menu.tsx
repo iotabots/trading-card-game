@@ -5,13 +5,13 @@ import CollectionIcon from '../../icons/CollectionIcon'
 import HistoryIcon from '../../icons/HistoryIcon'
 import HomeIcon from '../../icons/HomeIcon'
 import ShopIcon from '../../icons/ShopIcon'
-import { transition } from '../../styles'
+import { colors, transition } from '../../styles'
 
 const MENU = [
   {
     label: 'Home',
     icon: <HomeIcon />,
-    link: '/home'
+    link: '/'
   },
   {
     label: 'Collection',
@@ -26,7 +26,7 @@ const MENU = [
   {
     label: 'History',
     icon: <HistoryIcon />,
-    link: '/history-next'
+    link: '/history'
   },
 ]
 
@@ -62,7 +62,8 @@ const Menu: React.FC = () => {
               },
               '& svg': {
                 height: 32,
-                width: 32
+                width: 32,
+                color: colors.goldLight
               }
             }}
           >
@@ -72,8 +73,8 @@ const Menu: React.FC = () => {
               fontWeight: 800,
               fontSize: 12,
               textTransform: 'uppercase',
-              letterSpacing: '0.05em'
-
+              letterSpacing: '0.05em',
+              color: colors.goldLight
             }}>{label}</Typography>
           </Box>
         )

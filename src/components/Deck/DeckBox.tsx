@@ -1,62 +1,73 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import EditRoundedIcon from '@mui/icons-material/EditRounded'
-import { IconButton } from '@mui/material'
-import { flexRowBetween, transition } from '../../styles'
+import { colors, flexRowBetween, transition } from '../../styles'
 import { DeckType } from '../../types'
+import { DecksContext } from '../../contexts/DecksContext'
 
-interface DeckBoxProps extends DeckType {
-  setSelectedDeck: Dispatch<SetStateAction<number | undefined>>
-}
-
-const DeckBox: React.FC<DeckBoxProps> = (props) => {
-  const { name, id, setSelectedDeck, cards } = props
+const DeckBox: React.FC<DeckType> = (props) => {
+  const { name, id } = props
+  const { setEdit } = React.useContext(DecksContext)
 
   const onClick = (): void => {
-    setSelectedDeck(id)
-  }
-
-  let count = 0
-  for (let index = 0; index < cards.length; index += 1) {
-    const element = cards[index]
-    count += element.count
+    setEdit(id)
   }
 
   return (
-    <Box sx={{
-      bgcolor: 'rgba(255,255,255,0.05)',
-      p: 3,
-      mt: 4,
-      borderRadius: '8px',
-      ...flexRowBetween,
-      transition,
-      '& .edit': {
+    <Box
+      onClick={onClick}
+      sx={{
+        position: 'relative',
+        bgcolor: colors.dark,
+        p: 3,
+        mt: 4,
+        mb: 2,
+        width: '100%',
+        height: 80,
+        borderRadius: '8px',
+        border: '2px solid',
+        borderColor: colors.gold,
+        overflow: 'hidden',
+        cursor: 'pointer',
+        ...flexRowBetween,
         transition,
-        opacity: 0,
-        transform: 'translateY(-8px)',
-      },
-      '&:hover': {
-        bgcolor: 'background.paper',
-        '& .edit': {
-          opacity: 1,
-          transform: 'translateY(0px)',
+        '&:hover': {
+          '& .name': {
+            left: 20,
+            transform: 'translate(0%,-50%)'
+          },
+          '& .edit': {
+            opacity: 1,
+          }
         }
-      }
-    }}>
-      <Box>
-        <Typography fontWeight='bold'>{name}</Typography>
-        <Typography color='text.secondary'>
-          {`${count} / 33`}
+      }}>
+      <Box
+        className='name'
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%,-50%)',
+          transition
+        }}
+      >
+        <Typography fontSize={18} fontWeight='bold' color={colors.goldLight}>
+          {name}
         </Typography>
       </Box>
-      <IconButton
-        color='primary'
-        onClick={onClick}
+      <Box
+        className='edit'
         sx={{
-          ml: 4
+          position: 'absolute',
+          top: '50%',
+          right: 16,
+          transform: 'translate(0, -42%)',
+          color: colors.goldLight,
+          transition,
+          opacity: 0,
         }}>
         <EditRoundedIcon />
-      </IconButton>
+      </Box>
     </Box>
   )
 }

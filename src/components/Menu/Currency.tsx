@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import defaultCoin from '../../icons/coin.png'
 import premiumCoin from '../../icons/coin-rare.png'
+import { colors } from '../../styles'
 
 interface CurrencyProps {
   type: 'default' | 'premium'
@@ -22,7 +23,7 @@ const Currency: React.FC<CurrencyProps> = ({ type, value }) => (
       width: 32,
       mr: 1
     }} />
-    <Typography fontWeight='bold'>{value}</Typography>
+    <Typography fontWeight='bold' color={colors.goldLight}>{value}</Typography>
   </Box>
 )
 

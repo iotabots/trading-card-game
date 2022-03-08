@@ -77,8 +77,10 @@ const Shop: React.FC = () => {
 
   return (
     <MenuLayout>
-      <Container>
-        <Typography mb={4} variant='h2'>Shop</Typography>
+      <Container maxWidth='md'>
+        <Typography mb={4} variant='h2' color={colors.goldLight}>
+          Shop
+        </Typography>
         <Grid container spacing={6}>
           {PACKS.flatMap(({ icon, name, description, onClick }) => (
             <Grid

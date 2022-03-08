@@ -1,48 +1,46 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { Box, Button, Typography } from '@iotabots/components'
-import { IconButton } from '@mui/material'
-import AddRoundedIcon from '@mui/icons-material/AddRounded'
-import { DeckType } from '../../types'
+import { Box, Typography } from '@iotabots/components'
 import DeckBox from './DeckBox'
+import Button from '../Button'
+import { colors } from '../../styles'
+import DividerSvg from '../../icons/DividerSvg'
+import { DECKS } from '../../data/deck'
+import { DecksContext } from '../../contexts/DecksContext'
 
-interface DecksProps {
-  deck: DeckType
-  setSelectedDeck: Dispatch<SetStateAction<number | undefined>>
-  onPlay: () => void
-  queueTime: number
-}
-
-const Decks: React.FC<DecksProps> = (props) => {
-  const { deck, setSelectedDeck, onPlay, queueTime } = props
+const Decks: React.FC = () => {
+  const { setSelected } = React.useContext(DecksContext)
 
   return (
     <Box sx={{
-      bgcolor: 'rgba(0,0,0,0.5)',
+      bgcolor: colors.black,
+      border: '2px solid',
+      borderColor: colors.gold,
       borderRadius: '8px',
-      p: 4
+      p: 5,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     }}>
       <Box sx={{
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        mb: 4
+        justifyContent: 'center',
+        mb: 2
       }}>
-        <Typography variant='h4'>Decks</Typography>
-        <IconButton
-          disabled
-          color='success'
-          sx={{ ml: 4 }}
-        >
-          <AddRoundedIcon />
-        </IconButton>
+        <Typography variant='h5' color={colors.goldLight} mb={2}>
+          My Decks
+        </Typography>
+        <DividerSvg />
       </Box>
-      <DeckBox {...deck} setSelectedDeck={setSelectedDeck} />
+      {DECKS.map((deck) => (
+        <DeckBox {...deck} />
+      ))}
       <Button
         sx={{ mt: 4 }}
-        fullWidth
-        onClick={onPlay}
+        onClick={() => console.log('Create Deck')}
       >
-        {queueTime === 0 ? 'Play' : queueTime}
+        Create Deck
       </Button>
     </Box>
   )

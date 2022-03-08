@@ -15,7 +15,16 @@ const MenuLayout: React.FC = ({ children }) => (
     backgroundPosition: 'center'
   }}>
     <Header />
-    <Box sx={{ pt: '160px' }}>
+    <Box sx={{
+      position: 'fixed',
+      top: 80,
+      left: 0,
+      width: '100%',
+      pt: '80px',
+      pb: '40px',
+      height: 'calc(100vh - 205px)',
+      overflowY: 'scroll'
+    }}>
       {children}
     </Box>
     <Navbar />

@@ -5,6 +5,7 @@ import MenuLayout from '../layouts/MenuLayout'
 import DividerSvg from '../icons/DividerSvg'
 import { colors, transition } from '../styles'
 import Button from '../components/Button'
+import { DecksContext } from '../contexts/DecksContext'
 
 const DECKS = [
   {
@@ -52,11 +53,14 @@ const DECKS = [
 ]
 
 const Home: React.FC = () => {
-  const [selected, setSelected] = React.useState(0)
+  const { selected, setSelected } = React.useContext(DecksContext)
+
   return (
     <MenuLayout>
       <Container>
-        <Typography variant='h2' mb={4}>Choose your Deck</Typography>
+        <Typography variant='h2' mb={4} color={colors.goldLight}>
+          Choose your Deck
+        </Typography>
         <Grid container spacing={6}>
           {DECKS.flatMap((deck, index) => {
             const { name, bots, spells, mana } = deck
