@@ -112,7 +112,7 @@ const PlayButton: React.FC = () => {
         transform: 'translate(-50%, -50%)'
       }}>
         <Typography variant='h3'>
-          PLAY
+          {queueTime > 0 ? queueTime : 'PLAY'}
         </Typography>
       </Box>
     </Box>

@@ -55,13 +55,13 @@ export const GameProvider: React.FC = ({ children }) => {
 
   React.useEffect(() => {
     if (gameState?.player1.addr === account) {
-      if (Number(gameState?.turn) % 2 !== 0) {
+      if (Number(gameState?.turn) % 2 === 0) {
         setMyTurn(true)
       } else {
         setMyTurn(false)
       }
     } else if (gameState?.player2.addr === account) {
-      if (Number(gameState?.turn) % 2 === 0) {
+      if (Number(gameState?.turn) % 2 !== 0) {
         setMyTurn(true)
       } else {
         setMyTurn(false)

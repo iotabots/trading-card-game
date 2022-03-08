@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
-import EditRoundedIcon from '@mui/icons-material/EditRounded'
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
 import { colors, flexRowBetween, transition } from '../../styles'
 import { DeckType } from '../../types'
 import { DecksContext } from '../../contexts/DecksContext'
@@ -61,12 +61,12 @@ const DeckBox: React.FC<DeckType> = (props) => {
           position: 'absolute',
           top: '50%',
           right: 16,
-          transform: 'translate(0, -42%)',
+          transform: 'translate(0, -40%)',
           color: colors.goldLight,
           transition,
           opacity: 0,
         }}>
-        <EditRoundedIcon />
+        <ArrowForwardRoundedIcon />
       </Box>
     </Box>
   )

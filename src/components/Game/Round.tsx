@@ -152,7 +152,7 @@ const Round: React.FC<RoundProps> = (props) => {
             </Box>
           </Box>
         </Box>
-        <Button sx={{ ml: -7 }}>
+        <Button color='notice' sx={{ ml: -7 }}>
           <Box sx={{
             width: 100,
             display: 'flex',
