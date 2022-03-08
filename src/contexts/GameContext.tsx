@@ -102,7 +102,7 @@ export const GameProvider: React.FC = ({ children }) => {
       .call({ from: account })
     setGameState(gameResponse)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameId, account])
+  }, [gameId])
 
   // DRAW CARD
   const onNextPhase = async (): Promise<void> => {
