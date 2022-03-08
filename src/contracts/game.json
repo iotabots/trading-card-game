@@ -161,6 +161,11 @@
                 "internalType": "uint256",
                 "name": "size",
                 "type": "uint256"
+              },
+              {
+                "internalType": "bool[5]",
+                "name": "deployed",
+                "type": "bool[5]"
               }
             ],
             "internalType": "struct CardGame.BotZone",
@@ -251,6 +256,11 @@
                 "internalType": "uint256",
                 "name": "size",
                 "type": "uint256"
+              },
+              {
+                "internalType": "bool[5]",
+                "name": "deployed",
+                "type": "bool[5]"
               }
             ],
             "internalType": "struct CardGame.BotZone",
@@ -311,6 +321,25 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "game_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "isPlayerTurn",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -395,6 +424,11 @@
                     "internalType": "uint256",
                     "name": "size",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "bool[5]",
+                    "name": "deployed",
+                    "type": "bool[5]"
                   }
                 ],
                 "internalType": "struct CardGame.BotZone",
@@ -485,6 +519,11 @@
                     "internalType": "uint256",
                     "name": "size",
                     "type": "uint256"
+                  },
+                  {
+                    "internalType": "bool[5]",
+                    "name": "deployed",
+                    "type": "bool[5]"
                   }
                 ],
                 "internalType": "struct CardGame.BotZone",
@@ -569,6 +608,29 @@
   {
     "inputs": [
       {
+        "internalType": "uint256[33]",
+        "name": "arr",
+        "type": "uint256[33]"
+      },
+      {
+        "internalType": "int256",
+        "name": "left",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "right",
+        "type": "int256"
+      }
+    ],
+    "name": "quickSort",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "game_id",
         "type": "uint256"
@@ -595,7 +657,7 @@
         "type": "bool"
       }
     ],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   }
 ]
