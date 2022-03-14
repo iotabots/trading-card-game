@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { DECK, DECKS } from '../data/deck'
+import { DECKS } from '../data/deck'
 import { DeckType } from '../types'
 
 export interface DecksContextType {
@@ -20,10 +20,10 @@ export const DecksProvider: React.FC = ({ children }) => {
   const [edit, setEdit] = React.useState<number | undefined>(undefined)
   const [decks, setDecks] = React.useState<DeckType[]>(DECKS)
 
-  React.useEffect(() => {
-    console.log('Selected ID: ', selected)
-    console.log('Selected Item: ', decks[selected])
-  }, [selected, edit])
+  // React.useEffect(() => {
+  //   console.log('Selected ID: ', selected)
+  //   console.log('Selected Item: ', decks[selected])
+  // }, [selected, edit])
 
   const context: DecksContextType = {
     selected,
@@ -31,12 +31,10 @@ export const DecksProvider: React.FC = ({ children }) => {
     edit,
     setEdit,
     decks,
-    setDecks
+    setDecks,
   }
 
   return (
-    <DecksContext.Provider value={context}>
-      {children}
-    </DecksContext.Provider>
+    <DecksContext.Provider value={context}>{children}</DecksContext.Provider>
   )
 }

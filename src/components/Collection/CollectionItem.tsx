@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React from 'react'
-import { Box, Grid, Typography } from '@iotabots/components'
+import { Box, Grid } from '@iotabots/components'
 import { BoxProps } from '@mui/material'
 import Card from './Card'
 import Badge from '../Menu/Badge'
@@ -22,8 +22,9 @@ const CollectionItem: React.FC<CollectionItemProps> = (props) => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          mt: -5
-        }}>
+          mt: -5,
+        }}
+      >
         <Badge>{item[1]}</Badge>
       </Box>
     </Grid>

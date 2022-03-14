@@ -20,7 +20,6 @@ export interface BuyPacksProps {
   contract: Contract
 }
 
-
 const Shop: React.FC = () => {
   const { account, library } = useWeb3React()
   const [contract, setContract] = React.useState<Contract | undefined>(
@@ -37,7 +36,6 @@ const Shop: React.FC = () => {
   }
 
   const buyStarter = async (): Promise<void> => {
-    console.log('Buy Starter')
     // @ts-ignore
     if (contract.methods) {
       // @ts-ignore
@@ -58,13 +56,13 @@ const Shop: React.FC = () => {
       icon: <StarSvg />,
       name: 'Starter Pack',
       description: '40 unique cards',
-      onClick: buyStarter
+      onClick: buyStarter,
     },
     {
       icon: <RocketSvg />,
       name: 'Booster Pack',
       description: '10 random cards',
-      onClick: buyBooster
+      onClick: buyBooster,
     },
   ]
 
@@ -83,23 +81,22 @@ const Shop: React.FC = () => {
         </Typography>
         <Grid container spacing={6}>
           {PACKS.flatMap(({ icon, name, description, onClick }) => (
-            <Grid
-              item
-              xs={6}
-            >
-              <Box sx={{
-                backgroundColor: colors.black,
-                px: 4,
-                py: 4,
-                minHeight: '50vh',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: '2px solid',
-                borderColor: colors.gold,
-                borderRadius: '8px',
-              }}>
+            <Grid item xs={6}>
+              <Box
+                sx={{
+                  backgroundColor: colors.black,
+                  px: 4,
+                  py: 4,
+                  minHeight: '50vh',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '2px solid',
+                  borderColor: colors.gold,
+                  borderRadius: '8px',
+                }}
+              >
                 {icon}
                 <Typography
                   variant='h4'
@@ -112,7 +109,7 @@ const Shop: React.FC = () => {
                 <Typography
                   sx={{
                     color: colors.goldLight,
-                    opacity: '0.66'
+                    opacity: '0.66',
                   }}
                 >
                   {description}

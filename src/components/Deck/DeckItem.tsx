@@ -1,8 +1,6 @@
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import { IconButton } from '@mui/material'
-import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded'
-import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import ManaImage from '../../icons/Mana.png'
 import { colors, transition } from '../../styles'
 import MinusSvg from '../../icons/MinusSvg'
@@ -20,7 +18,8 @@ const DeckItem: React.FC<DeckItemProps> = (props) => {
   const { mana, name, count, id, changeCount } = props
 
   return (
-    <Box display='flex'
+    <Box
+      display='flex'
       alignItems='center'
       sx={{
         p: 2,
@@ -28,9 +27,9 @@ const DeckItem: React.FC<DeckItemProps> = (props) => {
           bgcolor: colors.dark,
           borderRadius: '8px',
           '& .counter': {
-            maxWidth: 95
-          }
-        }
+            maxWidth: 95,
+          },
+        },
       }}
     >
       <Box
@@ -45,9 +44,11 @@ const DeckItem: React.FC<DeckItemProps> = (props) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
         }}
-      >{mana}</Box>
+      >
+        {mana}
+      </Box>
       <Box flexGrow={1} sx={{ mr: 2 }}>
         <Typography fontWeight='bold' color={colors.goldLight}>
           {name}
@@ -61,7 +62,7 @@ const DeckItem: React.FC<DeckItemProps> = (props) => {
           alignItems: 'center',
           overflow: 'hidden',
           maxWidth: 40,
-          transition
+          transition,
         }}
       >
         <IconButton
@@ -71,16 +72,20 @@ const DeckItem: React.FC<DeckItemProps> = (props) => {
             color: colors.goldLight,
             transition,
             '&:hover svg': {
-              color: 'white'
-            }
-          }}>
+              color: 'white',
+            },
+          }}
+        >
           <MinusSvg />
         </IconButton>
         <Typography
           sx={{ minWidth: 16 }}
           textAlign='center'
           fontSize={16}
-          fontWeight='bold'>{count}</Typography>
+          fontWeight='bold'
+        >
+          {count}
+        </Typography>
         <IconButton
           onClick={() => changeCount(id, 1)}
           sx={{
@@ -88,9 +93,10 @@ const DeckItem: React.FC<DeckItemProps> = (props) => {
             color: colors.goldLight,
             transition,
             '&:hover svg': {
-              color: 'white'
-            }
-          }}>
+              color: 'white',
+            },
+          }}
+        >
           <PlusSvg />
         </IconButton>
       </Box>

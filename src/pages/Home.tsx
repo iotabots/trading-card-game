@@ -20,7 +20,7 @@ const DECKS = [
       4: 5,
       5: 3,
       6: 2,
-    }
+    },
   },
   {
     name: 'Early Rush',
@@ -34,7 +34,7 @@ const DECKS = [
       4: 5,
       5: 3,
       6: 2,
-    }
+    },
   },
   {
     name: 'Strong Mid',
@@ -48,7 +48,7 @@ const DECKS = [
       4: 5,
       5: 3,
       6: 2,
-    }
+    },
   },
 ]
 
@@ -63,39 +63,37 @@ const Home: React.FC = () => {
         </Typography>
         <Grid container spacing={6}>
           {DECKS.flatMap((deck, index) => {
-            const { name, bots, spells, mana } = deck
+            const { name } = deck
             const isSelected = selected === index
             return (
-              <Grid
-                item
-                xs={4}
-              >
-                <Box sx={{
-                  position: 'relative',
-                  backgroundColor: colors.black,
-                  px: 4,
-                  py: 4,
-                  minHeight: '50vh',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  border: '2px solid',
-                  borderColor: colors.gold,
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  opacity: isSelected ? 1 : 0.66,
-                  transition,
-                  '&:hover': {
-                    opacity: 1,
-                    pb: 6,
-                    '& .select': {
-                      bottom: 40,
-                      opacity: 1
-                    }
-                  }
-                }}>
-
+              <Grid item xs={4}>
+                <Box
+                  sx={{
+                    position: 'relative',
+                    backgroundColor: colors.black,
+                    px: 4,
+                    py: 4,
+                    minHeight: '50vh',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '2px solid',
+                    borderColor: colors.gold,
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    opacity: isSelected ? 1 : 0.66,
+                    transition,
+                    '&:hover': {
+                      opacity: 1,
+                      pb: 6,
+                      '& .select': {
+                        bottom: 40,
+                        opacity: 1,
+                      },
+                    },
+                  }}
+                >
                   <DividerSvg />
                   <Typography
                     variant='h5'
@@ -106,15 +104,17 @@ const Home: React.FC = () => {
                     {name}
                   </Typography>
                   <DividerSvg />
-                  <Box className='select'
+                  <Box
+                    className='select'
                     sx={{
                       position: 'absolute',
                       bottom: isSelected ? 40 : 26,
                       left: '50%',
                       transition,
                       transform: 'translateX(-50%)',
-                      opacity: isSelected ? 1 : 0
-                    }}>
+                      opacity: isSelected ? 1 : 0,
+                    }}
+                  >
                     <Button
                       color={isSelected ? 'light' : 'dark'}
                       onClick={() => setSelected(index)}

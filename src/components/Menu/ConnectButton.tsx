@@ -1,22 +1,25 @@
 import React from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
-import { injected, useEagerConnect, useInactiveListener } from '@iotabots/components'
+import {
+  injected,
+  useEagerConnect,
+  useInactiveListener,
+} from '@iotabots/components'
 import Button from '../Button'
 
-
 enum ConnectorNames {
-  Injected = 'Connect'
+  Injected = 'Connect',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const connectorsByName: { [connectorName in ConnectorNames]: any } = {
-  [ConnectorNames.Injected]: injected
+  [ConnectorNames.Injected]: injected,
 }
 const ConnectButton: React.FC = () => {
   // Do something
   const context = useWeb3React<Web3Provider>()
-  const { connector, activate, error } = context
+  const { activate } = context
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [activatingConnector, setActivatingConnector] = React.useState<any>()
@@ -30,8 +33,6 @@ const ConnectButton: React.FC = () => {
 
   const currentConnector = connectorsByName.Connect
   const activating = currentConnector === activatingConnector
-  const connected = currentConnector === connector
-  const disabled = !triedEager || !!activatingConnector || connected || !!error
 
   return (
     <Button

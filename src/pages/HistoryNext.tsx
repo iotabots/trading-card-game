@@ -46,8 +46,7 @@ const HistoryNext: React.FC = () => {
     )
     setGameContract(GameContract)
     const promises = []
-    const gamesCount: number =
-      await GameContract.methods.getGamesCount().call()
+    const gamesCount: number = await GameContract.methods.getGamesCount().call()
 
     if (gamesCount > 0) {
       for (let i = 0; i < gamesCount; i += 1) {
@@ -67,8 +66,6 @@ const HistoryNext: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, library])
 
-  console.log(games)
-
   return (
     <MenuLayout>
       <Container maxWidth='md'>
@@ -87,47 +84,46 @@ const HistoryNext: React.FC = () => {
               p: 4,
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
-            <Box sx={{
-              display: 'flex',
-              alignItems: 'center'
-            }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
               <Box>
                 <Avatar avatar='https://assets.iotabots.io/compressed/1.png' />
               </Box>
               <Box ml={2}>
-                <Typography
-                  variant='h5'
-                  mb={1}
-                  color={colors.goldLight}
-                >
+                <Typography variant='h5' mb={1} color={colors.goldLight}>
                   {shortenAddress(game.player1.addr)}
                 </Typography>
-                <Typography
-                  color={colors.goldLight}
-                  sx={{ opacity: 0.66 }}
-                >
+                <Typography color={colors.goldLight} sx={{ opacity: 0.66 }}>
                   {game.player1.addr === game.winner ? 'Victory' : 'Defeat'}
                 </Typography>
               </Box>
             </Box>
-            <Box sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%,-50%) scale(1.2)',
-            }}>
-              <Box sx={{
-                transition,
-                '& svg': {
-                  transform:
-                    game.player2.addr === game.winner
-                      ? 'rotate(180deg)'
-                      : 'rotate(0deg)'
-                }
-              }}>
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%,-50%) scale(1.2)',
+              }}
+            >
+              <Box
+                sx={{
+                  transition,
+                  '& svg': {
+                    transform:
+                      game.player2.addr === game.winner
+                        ? 'rotate(180deg)'
+                        : 'rotate(0deg)',
+                  },
+                }}
+              >
                 <VsSvg />
               </Box>
               <Box
@@ -136,18 +132,20 @@ const HistoryNext: React.FC = () => {
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-49%,-57%)',
-                }}>
+                }}
+              >
                 <Typography fontWeight='bold' color={colors.goldLight}>
                   VS
                 </Typography>
               </Box>
-
             </Box>
             {/* {id} */}
-            <Box sx={{
-              display: 'flex',
-              alignItems: 'center'
-            }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
               <Box mr={2}>
                 <Typography
                   variant='h5'

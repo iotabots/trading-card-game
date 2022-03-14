@@ -1,4 +1,3 @@
-
 import { Web3Provider } from '@ethersproject/providers'
 import { Box, Logo } from '@iotabots/components'
 import { useWeb3React } from '@web3-react/core'
@@ -17,7 +16,6 @@ const Header: React.FC = () => {
   const [bots, setBots] = React.useState<number[]>([])
 
   const load = React.useCallback(async (): Promise<boolean> => {
-    console.log('Header Account', account)
     const URL =
       'https://raw.githubusercontent.com/iotabots/save-the-bots/main/all.txt'
 
@@ -36,7 +34,7 @@ const Header: React.FC = () => {
       const botData = array[index].split(':')
       const obj = {
         id: botData[0],
-        address: botData[1]
+        address: botData[1],
       }
       airdropAddresses.push(obj)
     }
@@ -59,48 +57,59 @@ const Header: React.FC = () => {
   }, [account, library])
 
   return (
-    <Box sx={{
-      position: 'fixed',
-      zIndex: 10,
-      top: 0,
-      left: 0,
-      height: 80,
-      width: '100%',
-      borderBottom: '2px solid',
-      borderColor: colors.gold,
-      backgroundColor: colors.black,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      px: 6
-    }}>
+    <Box
+      sx={{
+        position: 'fixed',
+        zIndex: 10,
+        top: 0,
+        left: 0,
+        height: 80,
+        width: '100%',
+        borderBottom: '2px solid',
+        borderColor: colors.gold,
+        backgroundColor: colors.black,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        px: 6,
+      }}
+    >
       {account ? (
         <>
-          <Box sx={{
-            transform: 'translateY(40px)'
-          }}>
+          <Box
+            sx={{
+              transform: 'translateY(40px)',
+            }}
+          >
             <PlayerInfo
               avatar={
                 // eslint-disable-next-line max-len
-                `https://assets.iotabots.io/compressed/${bots[0] > 0 ? bots[0] : '1'}.png`
+                `https://assets.iotabots.io/compressed/${
+                  bots[0] > 0 ? bots[0] : '1'
+                }.png`
               }
-              name={String(account)} />
+              name={String(account)}
+            />
           </Box>
-          <Box sx={{
-            display: 'flex',
-            alignItems: 'center'
-          }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
             <Currency type='premium' value='242' />
             <Currency type='default' value='2.400' />
           </Box>
         </>
       ) : (
-        <Box sx={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <Logo />
           <ConnectButton />
         </Box>
