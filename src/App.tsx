@@ -1,13 +1,17 @@
 import React from 'react'
-import { Box, CssBaseline, Frame } from '@iotabots/components'
+import { Box, CssBaseline } from '@iotabots/components'
 import { Route, Routes } from 'react-router-dom'
 import { Web3Provider } from '@ethersproject/providers'
 import { Web3ReactProvider } from '@web3-react/core'
+import { GameProvider } from './contexts/GameContext'
+import { DecksProvider } from './contexts/DecksContext'
 import Theme from './Theme'
 import Game from './pages/Game'
+import Home from './pages/Home'
 import Collection from './pages/Collection'
-import History from './pages/History'
-import { GameProvider } from './contexts/GameContext'
+import Shop from './pages/Shop'
+import History from './pages/HistoryNext'
+import './styles.css'
 
 const App: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,17 +23,20 @@ const App: React.FC = () => {
   return (
     <Theme>
       <Web3ReactProvider getLibrary={getLibrary}>
-        <GameProvider>
-          <Frame />
-          <Box bgcolor='#0d1425' minHeight='100vh'>
-            <Routes>
-              <Route path='/' element={<Collection />} />
-              <Route path='/game' element={<Game />} />
-              <Route path='/history' element={<History />} />
-            </Routes>
-            <CssBaseline />
-          </Box>
-        </GameProvider>
+        <DecksProvider>
+          <GameProvider>
+            <Box bgcolor='#0d1425' minHeight='100vh'>
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/collection' element={<Collection />} />
+                <Route path='/shop' element={<Shop />} />
+                <Route path='/history' element={<History />} />
+                <Route path='/game' element={<Game />} />
+              </Routes>
+              <CssBaseline />
+            </Box>
+          </GameProvider>
+        </DecksProvider>
       </Web3ReactProvider>
     </Theme>
   )

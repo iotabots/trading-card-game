@@ -1,47 +1,29 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import React from 'react'
-import { Box, Container, Grid, Typography } from '@iotabots/components'
+import { Box, Grid, Typography } from '@iotabots/components'
 import { useWeb3React } from '@web3-react/core'
 import Web3 from 'web3'
+import { Container } from '@mui/material'
 import { Contract } from 'web3-eth-contract'
 import { AbiItem } from 'web3-utils'
-import { useNavigate } from 'react-router-dom'
-import BaseLayout from '../layouts/BaseLayout'
-import BuyPacks from '../components/Collection/BuyPacks'
+import MenuLayout from '../layouts/MenuLayout'
+import config from '../contracts/config'
 import CollectionItem from '../components/Collection/CollectionItem'
-import { DECK } from '../data/deck'
-import { DeckType } from '../types'
-import EditDeck from '../components/Deck/EditDeck'
 import Decks from '../components/Deck/Decks'
-
-import { config } from '../contracts/config'
-import { GameContext } from '../contexts/GameContext'
+import EditDeck from '../components/Deck/EditDeck'
+import { colors } from '../styles'
+import { DecksContext } from '../contexts/DecksContext'
 
 const CARDS_ABI = require('../contracts/cards.json')
-const GAME_ABI = require('../contracts/game.json')
 
 const Collection: React.FC = () => {
+  const { edit } = React.useContext(DecksContext)
   const { account, library } = useWeb3React()
-  const { setGameId, setGameState } = React.useContext(GameContext)
-  const navigate = useNavigate()
-
-  // C O N T R A C T S
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cardsContract, setCardsContract] = React.useState<
     Contract | undefined
   >(undefined)
-
-  const [queueTime, setQueueTime] = React.useState<number>(0)
-
-  const [gameContract, setGameContract] = React.useState<Contract | undefined>(
-    undefined
-  )
-
-  const [deck, setDeck] = React.useState<DeckType>(DECK)
-  const [selectedDeck, setSelectedDeck] = React.useState<number | undefined>(
-    undefined
-  )
   const [collection, setCollection] = React.useState<undefined[]>([])
-
   const init = async (): Promise<void> => {
     const web3 = new Web3(library.provider)
     const CardsContract = new web3.eth.Contract(
@@ -54,12 +36,6 @@ const Collection: React.FC = () => {
       .getMyCollection()
       .call({ from: account })
     setCollection(data)
-
-    const GameContract = new web3.eth.Contract(
-      GAME_ABI as AbiItem[],
-      config.GAME_ADDRESS
-    )
-    setGameContract(GameContract)
   }
 
   React.useEffect(() => {
@@ -68,69 +44,12 @@ const Collection: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, library])
-
-  const onPlay = async (): Promise<void> => {
-    const array: string[] = []
-    deck.cards.map((item): void => {
-      for (let index = 0; index < item.count; index += 1) {
-        array.push(item.id)
-      }
-    })
-
-    if (gameContract) {
-      // Join Queue
-      await gameContract.methods
-        .play(array)
-        .send({ from: account })
-
-      // Get GameId
-      const gamesCountResponse = await gameContract.methods
-        .getGamesCount()
-        .call({ from: account })
-      setGameId(gamesCountResponse - 1)
-
-      // Get GameState
-      const gameResponse = await gameContract.methods
-        .games(gamesCountResponse - 1)
-        .call({ from: account })
-
-      if (gameResponse.player1.addr === account) {
-        let gameResponse2
-        const interval = setInterval(async () => {
-          setQueueTime(queueTime + 1)
-          gameResponse2 = await gameContract.methods
-            .games(gamesCountResponse - 1)
-            .call({ from: account })
-          if (gameResponse2.player2.addr !== config.NULL_ADDRESS) {
-            clearInterval(interval)
-            setGameState(gameResponse2)
-            navigate('/game')
-          }
-        }, 5000)
-      } else if (gameResponse.player2.addr === account) {
-        setGameState(gameResponse)
-        navigate('/game')
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('error')
-      }
-    }
-  }
-
   return (
-    <BaseLayout>
-      <Container sx={{ pb: 6 }}>
-        <Box
-          sx={{
-            mb: 6,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Typography variant='h2'>Collection</Typography>
-          {cardsContract && <BuyPacks contract={cardsContract} />}
-        </Box>
+    <MenuLayout>
+      <Container>
+        <Typography variant='h2' mb={4} color={colors.goldLight}>
+          Collection
+        </Typography>
         <Grid container spacing={6}>
           <Grid item xs={8} container spacing={6}>
             {collection.flatMap((item) => {
@@ -145,24 +64,11 @@ const Collection: React.FC = () => {
             })}
           </Grid>
           <Grid item xs={4}>
-            {selectedDeck !== undefined ? (
-              <EditDeck
-                deck={deck}
-                setDeck={setDeck}
-                setSelectedDeck={setSelectedDeck}
-              />
-            ) : (
-              <Decks
-                deck={deck}
-                onPlay={onPlay}
-                queueTime={queueTime}
-                setSelectedDeck={setSelectedDeck}
-              />
-            )}
+            {edit !== undefined ? <EditDeck /> : <Decks />}
           </Grid>
         </Grid>
       </Container>
-    </BaseLayout>
+    </MenuLayout>
   )
 }
 

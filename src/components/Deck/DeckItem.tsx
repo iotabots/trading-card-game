@@ -4,6 +4,9 @@ import { IconButton } from '@mui/material'
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded'
 import AddRoundedIcon from '@mui/icons-material/AddRounded'
 import ManaImage from '../../icons/Mana.png'
+import { colors, transition } from '../../styles'
+import MinusSvg from '../../icons/MinusSvg'
+import PlusSvg from '../../icons/PlusSvg'
 
 interface DeckItemProps {
   id: string
@@ -17,15 +20,27 @@ const DeckItem: React.FC<DeckItemProps> = (props) => {
   const { mana, name, count, id, changeCount } = props
 
   return (
-    <Box display='flex' alignItems='center' sx={{ mb: 2 }}>
+    <Box display='flex'
+      alignItems='center'
+      sx={{
+        p: 2,
+        '&:hover': {
+          bgcolor: colors.dark,
+          borderRadius: '8px',
+          '& .counter': {
+            maxWidth: 95
+          }
+        }
+      }}
+    >
       <Box
         sx={{
           backgroundImage: `url(${ManaImage})`,
           backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          width: 50,
-          height: 50,
+          width: 44,
+          height: 44,
           mr: 2,
           display: 'flex',
           alignItems: 'center',
@@ -33,32 +48,50 @@ const DeckItem: React.FC<DeckItemProps> = (props) => {
           fontWeight: 'bold'
         }}
       >{mana}</Box>
-      <Box flexGrow={1} sx={{ mr: 2 }}>{name}</Box>
-      <Box sx={{
-        mr: 2,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
+      <Box flexGrow={1} sx={{ mr: 2 }}>
+        <Typography fontWeight='bold' color={colors.goldLight}>
+          {name}
+        </Typography>
+      </Box>
+      <Box
+        className='counter'
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          overflow: 'hidden',
+          maxWidth: 40,
+          transition
+        }}
       >
         <IconButton
-          color='error'
-          size='small'
           onClick={() => changeCount(id, -1)}
           sx={{
-            mr: 2
+            mr: 2,
+            color: colors.goldLight,
+            transition,
+            '&:hover svg': {
+              color: 'white'
+            }
           }}>
-          <RemoveRoundedIcon />
+          <MinusSvg />
         </IconButton>
-        <Typography>{count}</Typography>
+        <Typography
+          sx={{ minWidth: 16 }}
+          textAlign='center'
+          fontSize={16}
+          fontWeight='bold'>{count}</Typography>
         <IconButton
-          color='success'
-          size='small'
           onClick={() => changeCount(id, 1)}
           sx={{
-            ml: 2
+            ml: 2,
+            color: colors.goldLight,
+            transition,
+            '&:hover svg': {
+              color: 'white'
+            }
           }}>
-          <AddRoundedIcon />
+          <PlusSvg />
         </IconButton>
       </Box>
     </Box>

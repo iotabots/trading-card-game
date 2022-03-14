@@ -55,17 +55,13 @@ export const GameProvider: React.FC = ({ children }) => {
 
   React.useEffect(() => {
     if (gameState?.player1.addr === account) {
-      // console.log('I am player 1')
-      if (Number(gameState?.turn) % 2 !== 0) {
-        // console.log('>>> Its my turn!')
+      if (Number(gameState?.turn) % 2 === 0) {
         setMyTurn(true)
       } else {
         setMyTurn(false)
       }
     } else if (gameState?.player2.addr === account) {
-      // console.log('I am player 2')
-      if (Number(gameState?.turn) % 2 === 0) {
-        // console.log('>>> Its my turn!')
+      if (Number(gameState?.turn) % 2 !== 0) {
         setMyTurn(true)
       } else {
         setMyTurn(false)
@@ -88,7 +84,7 @@ export const GameProvider: React.FC = ({ children }) => {
       updateGameState()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, gameId, gameState])
+  }, [account, gameState])
 
   const updateGameState = React.useCallback(async (): Promise<void> => {
     const web3 = new Web3(library.provider)
@@ -102,7 +98,7 @@ export const GameProvider: React.FC = ({ children }) => {
       .call({ from: account })
     setGameState(gameResponse)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameId, account])
+  }, [gameId])
 
   // DRAW CARD
   const onNextPhase = async (): Promise<void> => {

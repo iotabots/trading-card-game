@@ -1,3 +1,12 @@
+export const colors = {
+  secondary: '#DECB23',
+  gold: '#7E633A',
+  goldLight: '#E8E3D2',
+  black: '#060A12',
+  dark: '#0D1424',
+  notice: '#238FDE',
+}
+
 export const flexRowBetween = {
   display: 'flex',
   alignItems: 'center',

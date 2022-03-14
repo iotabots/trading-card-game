@@ -1,51 +1,44 @@
-import React, { Dispatch, SetStateAction } from 'react'
-import { Box, Button, Typography } from '@iotabots/components'
-import { IconButton } from '@mui/material'
-import AddRoundedIcon from '@mui/icons-material/AddRounded'
-import { DeckType } from '../../types'
+import React from 'react'
+import { Box, Typography } from '@iotabots/components'
 import DeckBox from './DeckBox'
+import Button from '../Button'
+import { colors } from '../../styles'
+import DividerSvg from '../../icons/DividerSvg'
+import { DECKS } from '../../data/deck'
 
-interface DecksProps {
-  deck: DeckType
-  setSelectedDeck: Dispatch<SetStateAction<number | undefined>>
-  onPlay: () => void
-  queueTime: number
-}
-
-const Decks: React.FC<DecksProps> = (props) => {
-  const { deck, setSelectedDeck, onPlay, queueTime } = props
-
-  return (
+const Decks: React.FC = () => (
+  <Box sx={{
+    bgcolor: colors.black,
+    border: '2px solid',
+    borderColor: colors.gold,
+    borderRadius: '8px',
+    p: 5,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }}>
     <Box sx={{
-      bgcolor: 'rgba(0,0,0,0.5)',
-      borderRadius: '8px',
-      p: 4
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      mb: 2
     }}>
-      <Box sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        mb: 4
-      }}>
-        <Typography variant='h4'>Decks</Typography>
-        <IconButton
-          disabled
-          color='success'
-          sx={{ ml: 4 }}
-        >
-          <AddRoundedIcon />
-        </IconButton>
-      </Box>
-      <DeckBox {...deck} setSelectedDeck={setSelectedDeck} />
-      <Button
-        sx={{ mt: 4 }}
-        fullWidth
-        onClick={onPlay}
-      >
-        {queueTime === 0 ? 'Play' : queueTime}
-      </Button>
+      <Typography variant='h5' color={colors.goldLight} mb={2}>
+        My Decks
+      </Typography>
+      <DividerSvg />
     </Box>
-  )
-}
+    {DECKS.map((deck) => (
+      <DeckBox {...deck} />
+    ))}
+    {/* <Button
+      sx={{ mt: 4 }}
+      onClick={() => console.log('Create Deck')}
+    >
+      Create Deck
+    </Button> */}
+  </Box>
+)
 
 export default Decks

@@ -6,7 +6,7 @@
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@ethersproject/providers": "^5.5.3",
-    "@iotabots/components": "^0.0.47",
+    "@iotabots/components": "^0.0.48",
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.1.1",
     "@testing-library/jest-dom": "^5.14.1",

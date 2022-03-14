@@ -2,6 +2,7 @@
 import React from 'react'
 import { Box, Typography } from '@iotabots/components'
 import { useWeb3React } from '@web3-react/core'
+import { shortenAddress } from '../../utils/shortenAddress'
 
 export interface Game {
   id: number
@@ -45,26 +46,12 @@ const GamesList: React.FC<GamesListProps> = (props) => {
                 </td>
                 <td>
                   <Typography variant='body1'>
-                    {`${game.player1?.addr.substring(
-                      0,
-                      5
-                    )}...${game.player1?.addr.substring(
-                      // eslint-disable-next-line
-                      game.player1?.addr.length - 3,
-                      game.player1?.addr.length
-                    )}`}
+                    {shortenAddress(game.player1?.addr || 'undefined')}
                   </Typography>
                 </td>
                 <td>
                   <Typography variant='body1'>
-                    {`${game.player2?.addr.substring(
-                      0,
-                      5
-                    )}...${game.player2?.addr.substring(
-                      // eslint-disable-next-line
-                      game.player2?.addr.length - 3,
-                      game.player2?.addr.length
-                    )}`}
+                    {shortenAddress(game.player2?.addr || 'undefined')}
                   </Typography>
                 </td>
               </tr>
